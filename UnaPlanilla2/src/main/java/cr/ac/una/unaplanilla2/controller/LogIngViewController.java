@@ -14,7 +14,7 @@ import javafx.fxml.Initializable;
  *
  * @author David
  */
-public class LogIngViewController implements Initializable {
+public class LogIngViewController extends Controller implements Initializable {
 
     /**
      * Initializes the controller class.
@@ -23,5 +23,11 @@ public class LogIngViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    @Override
+    public void initialize() {
+        
+        
+    }
     
 }

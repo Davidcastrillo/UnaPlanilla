@@ -19,7 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import unaplanilla2.controller.Controller;
+import cr.ac.una.unaplanilla2.controller.Controller;
 import cr.ac.una.unaplanilla2.App;
 
 public class FlowController {
