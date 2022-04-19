@@ -1,10 +1,11 @@
 cr\ac\una\unaplanilla2\App.class
+cr\ac\una\unaplanilla2\controller\TiposPlanillaController.class
 cr\ac\una\unaplanilla2\util\Formato.class
 cr\ac\una\unaplanilla2\util\BindingUtils.class
-cr\ac\una\unaplanilla2\controller\SecondaryController.class
 cr\ac\una\unaplanilla2\controller\Controller.class
+cr\ac\una\unaplanilla2\controller\PrincipalViewController.class
 cr\ac\una\unaplanilla2\util\LocalDateTimeAdapter.class
-cr\ac\una\unaplanilla2\controller\PrimaryController.class
+cr\ac\una\unaplanilla2\controller\EmpleadosViewController.class
 cr\ac\una\unaplanilla2\controller\LogIngViewController.class
 cr\ac\una\unaplanilla2\util\AppContext.class
 cr\ac\una\unaplanilla2\util\Respuesta.class

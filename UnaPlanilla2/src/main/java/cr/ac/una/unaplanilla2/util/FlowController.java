@@ -81,7 +81,7 @@ public class FlowController {
 
     public void goMain() {
         try {
-            this.mainStage.setScene(new Scene(FXMLLoader.load(App.class.getResource("views/LogIngView.fxml"), this.idioma)));
+            this.mainStage.setScene(new Scene(FXMLLoader.load(App.class.getResource("views/PrincipalView.fxml"), this.idioma)));
             this.mainStage.show();
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(FlowController.class.getName()).log(Level.SEVERE, "Error inicializando la vista base.", ex);
@@ -136,7 +136,7 @@ public class FlowController {
         Controller controller = loader.getController();
         controller.initialize();
         Stage stage = new Stage();
-        stage.getIcons().add(new Image("UnaPlanilla2/resources/Agregar-48.png"));
+        stage.getIcons().add(new Image("cr/ac/una/unaplanilla2/resources/Usuario-48.png"));
         stage.setTitle("UNA PLANILLA");
         stage.setOnHidden((WindowEvent event) -> {
             controller.getStage().getScene().setRoot(new Pane());
@@ -156,7 +156,7 @@ public class FlowController {
         Controller controller = loader.getController();
         controller.initialize();
         Stage stage = new Stage();
-        stage.getIcons().add(new Image("UnaPlanilla2/resources/Agregar-48.png"));
+        stage.getIcons().add(new Image("cr/ac/una/unaplanilla2/resources/Usuario-48.png"));
         stage.setTitle("UNA PLANILLA");
         stage.setResizable(resizable);
         stage.setOnHidden((WindowEvent event) -> {

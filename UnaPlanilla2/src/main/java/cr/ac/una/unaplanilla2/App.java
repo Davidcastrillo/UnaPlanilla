@@ -1,5 +1,6 @@
 package cr.ac.una.unaplanilla2;
 
+import cr.ac.una.unaplanilla2.util.FlowController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import javafx.scene.image.Image;
 
 /**
  * JavaFX App
@@ -17,20 +19,13 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("LogIngView"), 640, 480);
-        stage.setScene(scene);
-        stage.show();
+       FlowController.getInstance().InitializeFlow(stage,null);
+        stage.getIcons().add(new Image("cr/ac/una/unaplanilla2/resources/Usuario-48.png"));
+        stage.setTitle("UNA PLANILLA");
+        FlowController.getInstance().goViewInWindow("LogIngView");
     }
 
-    public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
-
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/" + fxml + ".fxml"));
-        return fxmlLoader.load();
-    }
-
+  
     public static void main(String[] args) {
         launch();
     }
