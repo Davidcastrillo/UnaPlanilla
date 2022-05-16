@@ -17,6 +17,7 @@ import javafx.scene.control.Cell;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 /**
@@ -36,6 +37,10 @@ public class BusquedaViewController extends Controller implements Initializable 
     private TableView tbvResultados;
     @FXML
     private JFXButton btnAceptar;
+    @FXML
+    private AnchorPane root;
+    @FXML
+    private JFXButton btnCancelar;
 
     /**
      * Initializes the controller class.
@@ -94,7 +99,7 @@ public class BusquedaViewController extends Controller implements Initializable 
             tbvResultados.getItems().clear();
             
             TableColumn<EmpleadoDto, String> tbcId = new TableColumn<>("Id");
-            tbcId.setPrefWidth(0);
+            tbcId.setPrefWidth(10);
             tbcId.setCellValueFactory(cd -> cd.getValue().id);
 
             TableColumn<EmpleadoDto, String> tbcCedula = new TableColumn<>("Cédula");
@@ -124,10 +129,15 @@ public class BusquedaViewController extends Controller implements Initializable 
             
             
         } catch (Exception e) {
+            System.out.println("jaja se callo xd");
         }
         
         
         
+    }
+
+    @FXML
+    private void OnActionBtnCancelar(ActionEvent event) {
     }
     
 }

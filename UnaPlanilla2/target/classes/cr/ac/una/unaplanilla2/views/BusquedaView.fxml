@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableView?>
@@ -9,32 +10,38 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/15.0.1" fx:controller="cr.ac.una.unaplanilla2.controller.BusquedaViewController">
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.unaplanilla2.controller.BusquedaViewController">
     <stylesheets>
         <URL value="@Styles.css" />
     </stylesheets>
    <children>
-      <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-padding: 0 0 0 0;" stylesheets="@Styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="400.0" prefWidth="171.0" HBox.hgrow="NEVER">
+            <VBox prefHeight="400.0" prefWidth="171.0" HBox.hgrow="SOMETIMES">
                <children>
-                  <Label alignment="CENTER" prefHeight="49.0" prefWidth="174.0" text="Parametros" textAlignment="CENTER" VBox.vgrow="SOMETIMES" />
+                  <Label alignment="CENTER" prefHeight="49.0" prefWidth="174.0" styleClass="jfx-titulo-label-fondo" text="Parametros" textAlignment="CENTER" VBox.vgrow="SOMETIMES" />
                   <ScrollPane prefHeight="305.0" prefWidth="171.0" VBox.vgrow="ALWAYS">
                      <content>
-                        <VBox fx:id="vbxParametros" alignment="CENTER_LEFT" prefHeight="473.0" prefWidth="169.0" />
+                        <VBox fx:id="vbxParametros" prefHeight="473.0" prefWidth="169.0" spacing="15.0">
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding></VBox>
                      </content>
                   </ScrollPane>
-                  <JFXButton fx:id="btnfFiltrar" alignment="CENTER" prefHeight="46.0" prefWidth="172.0" ripplerFill="#431212" text="Filtrar" textAlignment="CENTER" VBox.vgrow="ALWAYS" />
+                  <JFXButton fx:id="btnfFiltrar" alignment="CENTER" prefHeight="46.0" prefWidth="172.0" styleClass="jfx-menubutton1" text="Filtrar" textAlignment="CENTER" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
             <VBox prefHeight="400.0" prefWidth="430.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Label fx:id="lblTitulo" alignment="CENTER" prefHeight="51.0" prefWidth="430.0" text="Busqueda" textAlignment="CENTER" VBox.vgrow="ALWAYS" />
+                  <Label fx:id="lblTitulo" alignment="CENTER" prefHeight="51.0" prefWidth="430.0" styleClass="jfx-titulo-label-fondo" text="Busqueda" textAlignment="CENTER" VBox.vgrow="ALWAYS" />
                   <TableView fx:id="tbvResultados" prefHeight="304.0" prefWidth="430.0" VBox.vgrow="ALWAYS" />
-                  <HBox alignment="CENTER_RIGHT" prefHeight="55.0" prefWidth="430.0" VBox.vgrow="ALWAYS">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="67.0" prefWidth="429.0" styleClass="jfx-contenedor-principal" VBox.vgrow="NEVER">
                      <children>
-                        <JFXButton fx:id="btnAceptar" alignment="CENTER" onAction="#OnActionBtnAceptar" prefHeight="52.0" prefWidth="152.0" text="Aceptar" />
+                        <JFXButton fx:id="btnAceptar" buttonType="RAISED" onAction="#OnActionBtnAceptar" prefHeight="52.0" prefWidth="152.0" ripplerFill="WHITE" styleClass="jfx-menubutton2" text="Aceptar" />
                      </children>
+                     <VBox.margin>
+                        <Insets right="1.0" />
+                     </VBox.margin>
                   </HBox>
                </children>
             </VBox>
