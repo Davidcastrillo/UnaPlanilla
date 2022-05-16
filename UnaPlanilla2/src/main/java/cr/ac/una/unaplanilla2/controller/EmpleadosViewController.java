@@ -14,6 +14,7 @@ import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 import cr.ac.una.unaplanilla2.model.EmpleadoDto;
 import cr.ac.una.unaplanilla2.util.BindingUtils;
+import cr.ac.una.unaplanilla2.util.FlowController;
 import cr.ac.una.unaplanilla2.util.Formato;
 import java.net.URL;
 import java.util.ArrayList;
@@ -115,6 +116,8 @@ public class EmpleadosViewController extends Controller implements Initializable
 
     @FXML
     private void onActionBtnBuscar(ActionEvent event) {
+        FlowController.getInstance().goViewInWindowModal("BusquedaView",getStage(),true);
+        
     }
 
     @FXML

@@ -5,6 +5,7 @@ cr\ac\una\unaplanilla2\util\BindingUtils.class
 cr\ac\una\unaplanilla2\model\EmpleadoDto.class
 cr\ac\una\unaplanilla2\controller\Controller.class
 cr\ac\una\unaplanilla2\controller\PrincipalViewController.class
+cr\ac\una\unaplanilla2\controller\BusquedaViewController.class
 cr\ac\una\unaplanilla2\controller\EmpleadosViewController.class
 cr\ac\una\unaplanilla2\controller\LogIngViewController.class
 cr\ac\una\unaplanilla2\util\AppContext.class

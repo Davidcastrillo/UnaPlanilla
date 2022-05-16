@@ -136,8 +136,8 @@ public class FlowController {
         Controller controller = loader.getController();
         controller.initialize();
         Stage stage = new Stage();
-        stage.getIcons().add(new Image("cr/ac/una/unaplanilla2/resources/Usuario-48.png"));
-        stage.setTitle("UNA PLANILLA");
+       // stage.getIcons().add(new Image(""));
+        stage.setTitle("Kiosko");
         stage.setOnHidden((WindowEvent event) -> {
             controller.getStage().getScene().setRoot(new Pane());
             controller.setStage(null);
@@ -156,8 +156,8 @@ public class FlowController {
         Controller controller = loader.getController();
         controller.initialize();
         Stage stage = new Stage();
-        stage.getIcons().add(new Image("cr/ac/una/unaplanilla2/resources/Usuario-48.png"));
-        stage.setTitle("UNA PLANILLA");
+       // stage.getIcons().add(new Image("cr/ac/una/unaplanilla2/resources/Usuario-48.png"));
+        //stage.setTitle("UNA PLANILLA");
         stage.setResizable(resizable);
         stage.setOnHidden((WindowEvent event) -> {
             controller.getStage().getScene().setRoot(new Pane());
