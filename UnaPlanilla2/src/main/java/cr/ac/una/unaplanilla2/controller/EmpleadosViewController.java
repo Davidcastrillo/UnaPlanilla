@@ -16,6 +16,7 @@ import cr.ac.una.unaplanilla2.model.EmpleadoDto;
 import cr.ac.una.unaplanilla2.util.BindingUtils;
 import cr.ac.una.unaplanilla2.util.FlowController;
 import cr.ac.una.unaplanilla2.util.Formato;
+import cr.ac.una.unaplanilla2.util.Mensaje;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -112,6 +113,9 @@ public class EmpleadosViewController extends Controller implements Initializable
 
     @FXML
     private void onActionBtnNuevo(ActionEvent event) {
+         if (new Mensaje().showConfirmation("Limpiar empleado", getStage(), "¿Esta seguro que desea limpiar el registro?")) {
+            nuevoEmpleado();
+        }
     }
 
     @FXML

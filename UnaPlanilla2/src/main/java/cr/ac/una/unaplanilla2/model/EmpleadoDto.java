@@ -47,22 +47,23 @@ public class EmpleadoDto {
         this.estado = new SimpleBooleanProperty(true);
         this.modificado = false;
     }
-//    public EmpleadoDto(EmpleadoDto empleadoDto) {
-//        this();
-//        this.id.set(empleadoDto.getId().toString());
-//        this.nombre.set(empleadoDto.getNombre());
-//        this.pApellido.set(empleadoDto.getpApellido());
-//        this.sApellido.set(empleadoDto.getsApellido());
-//        this.cedula.set(empleadoDto.getCedula());
-//        this.genero.set(empleadoDto.getGenero());
-//        this.correo.set(empleadoDto.getCorreo());
-//        this.administrador.setValue(empleadoDto.getAdministrador().equalsIgnoreCase("S"));
-//        this.usuario.set(empleadoDto.getUsuario());
-//        this.clave.set(empleadoDto.getClave());
-//        this.fIngreso.set(empleadoDto.getfIngreso());
-//        this.fSalida.set(empleadoDto.getfSalida());
-//        this.modificado.(empleadoDto.getModificado());
-//    } 
+    public EmpleadoDto(Empleados empleados) {
+        this();
+        this.id.set(empleados.getId().toString());
+        this.nombre.set(empleados.getNombre());
+        this.pApellido.set(empleados.getPapellido());
+        this.sApellido.set(empleados.getSapellido());
+        this.cedula.set(empleados.getCedula());
+        this.genero.set(empleados.getGenero());
+        this.correo.set(empleados.getCorreo());
+        this.administrador.setValue(empleados.getAdministrador().equalsIgnoreCase("S"));
+        this.usuario.set(empleados.getUsuario());
+        this.clave.set(empleados.getClave());
+//        this.fIngreso.set(empleados.getFingreso());
+//        this.fSalida.set(empleados.getFsalida());
+        this.estado.setValue(empleados.getEstado().equalsIgnoreCase("A"));
+    } 
+
 
     public Long getId() {
           if(id.get()!=null && !id.get().isEmpty())

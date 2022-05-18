@@ -34,10 +34,10 @@
             <VBox prefHeight="400.0" prefWidth="430.0" HBox.hgrow="ALWAYS">
                <children>
                   <Label fx:id="lblTitulo" alignment="CENTER" prefHeight="51.0" prefWidth="430.0" styleClass="jfx-titulo-label-fondo" text="Busqueda" textAlignment="CENTER" VBox.vgrow="ALWAYS" />
-                  <TableView fx:id="tbvResultados" prefHeight="304.0" prefWidth="430.0" VBox.vgrow="ALWAYS" />
+                  <TableView fx:id="tbvResultados" onMousePressed="#OnMousePressedTvbResultados" prefHeight="304.0" prefWidth="430.0" VBox.vgrow="ALWAYS" />
                   <HBox alignment="CENTER_RIGHT" prefHeight="67.0" prefWidth="429.0" styleClass="jfx-contenedor-principal" VBox.vgrow="NEVER">
                      <children>
-                        <JFXButton fx:id="btnCancelar" onAction="#OnActionBtnCancelar" prefHeight="44.0" prefWidth="147.0" styleClass="jfx-btn-eliminar" text="Cancelar" />
+                        <JFXButton fx:id="btnCancelar" disable="true" onAction="#OnActionBtnCancelar" prefHeight="44.0" prefWidth="147.0" styleClass="jfx-btn-eliminar" text="Cancelar" />
                         <JFXButton fx:id="btnAceptar" buttonType="RAISED" onAction="#OnActionBtnAceptar" prefHeight="52.0" prefWidth="152.0" ripplerFill="WHITE" styleClass="jfx-menubutton2" text="Aceptar" />
                      </children>
                      <VBox.margin>

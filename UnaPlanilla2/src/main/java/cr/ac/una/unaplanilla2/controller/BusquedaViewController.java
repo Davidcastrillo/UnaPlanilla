@@ -11,12 +11,15 @@ import cr.ac.una.unaplanilla2.util.Formato;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Cell;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
@@ -41,6 +44,8 @@ public class BusquedaViewController extends Controller implements Initializable 
     private AnchorPane root;
     @FXML
     private JFXButton btnCancelar;
+    
+    private EventHandler<KeyEvent> keyEnter;
 
     /**
      * Initializes the controller class.
@@ -69,21 +74,25 @@ public class BusquedaViewController extends Controller implements Initializable 
             JFXTextField txtCed = new JFXTextField();
             txtCed.setLabelFloat(true);
             txtCed.setPromptText("Cedula");
+            txtCed.setOnKeyPressed(keyEnter);
             txtCed.setTextFormatter(Formato.getInstance().cedulaFormat(20));
             //Nombre//
             JFXTextField txtNombre = new JFXTextField();
             txtNombre.setLabelFloat(true);
             txtNombre.setPromptText("Nombre");
+            txtNombre.setOnKeyPressed(keyEnter);
             txtNombre.setTextFormatter(Formato.getInstance().letrasFormat(30));
             //Primer Apellido
             JFXTextField txtPapellido = new JFXTextField();
             txtPapellido.setLabelFloat(true);
             txtPapellido.setPromptText("Primer Apellido");
+            txtPapellido.setOnKeyPressed(keyEnter);
             txtPapellido.setTextFormatter(Formato.getInstance().letrasFormat(20));
             //Segundo Apellido
             JFXTextField txtSapellido = new JFXTextField();
             txtSapellido.setLabelFloat(true);
             txtSapellido.setPromptText("Segundo Apellido");
+            txtSapellido.setOnKeyPressed(keyEnter);
             txtSapellido.setTextFormatter(Formato.getInstance().letrasFormat(20));
             
             // Agregar el vbox de parametros de busqueda
@@ -138,6 +147,15 @@ public class BusquedaViewController extends Controller implements Initializable 
 
     @FXML
     private void OnActionBtnCancelar(ActionEvent event) {
+        
+    }
+
+    @FXML
+    private void OnMousePressedTvbResultados(MouseEvent event) {
+           if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+            OnActionBtnAceptar(null);
+            
+    }
     }
     
 }

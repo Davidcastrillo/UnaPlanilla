@@ -8,9 +8,11 @@ package cr.ac.una.unaplanilla2.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import cr.ac.una.unaplanilla2.service.EmpleadoService;
 import cr.ac.una.unaplanilla2.util.AppContext;
 import cr.ac.una.unaplanilla2.util.FlowController;
 import cr.ac.una.unaplanilla2.util.Mensaje;
+import cr.ac.una.unaplanilla2.util.Respuesta;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -70,15 +72,23 @@ public class LogIngViewController extends Controller implements Initializable {
 
     @FXML
     private void onActionBtnIngresar(ActionEvent event) {
+
       try {
             if (txtUsuario.getText() == null || txtUsuario.getText().isEmpty()) {
                 new Mensaje().showModal(Alert.AlertType.ERROR, "Validación de usuario", getStage(), "Es necesario digitar un usuario para ingresar al sistema.");
             } else if (txtClave.getText() == null || txtClave.getText().isEmpty()) {
                 new Mensaje().showModal(Alert.AlertType.ERROR, "Validación de usuario", (Stage) btnIngresar.getScene().getWindow(), "Es necesario digitar la clave para ingresar al sistema.");
             } else {
-                    AppContext.getInstance().set("Usuario", txtUsuario.getText());
+//               EmpleadoService empleadoService = new EmpleadoService();
+//                Respuesta respuesta = empleadoService.getUsuario(txtUsuario.getText(), txtClave.getText());
+//                if(respuesta.getEstado()){
+                    //AppContext.getInstance().set("Usuario", respuesta.getResultado("Empleado"));
                     FlowController.getInstance().goMain();
                     getStage().close();
+//                } else {
+//                    new Mensaje().show(Alert.AlertType.ERROR, "Validación Usuario", respuesta.getMensaje());
+//                }
+
             }
         } catch (Exception ex) {
             Logger.getLogger(LogIngViewController.class.getName()).log(Level.SEVERE, "Error ingresando.", ex);
