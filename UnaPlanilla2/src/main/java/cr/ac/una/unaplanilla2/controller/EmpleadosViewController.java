@@ -13,20 +13,26 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 import cr.ac.una.unaplanilla2.model.EmpleadoDto;
+import cr.ac.una.unaplanilla2.service.EmpleadoService;
 import cr.ac.una.unaplanilla2.util.BindingUtils;
 import cr.ac.una.unaplanilla2.util.FlowController;
 import cr.ac.una.unaplanilla2.util.Formato;
 import cr.ac.una.unaplanilla2.util.Mensaje;
+import cr.ac.una.unaplanilla2.util.Respuesta;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 /**
@@ -105,6 +111,9 @@ public class EmpleadosViewController extends Controller implements Initializable
 
     @FXML
     private void onKeyPressedTxtId(KeyEvent event) {
+         if (event.getCode() == KeyCode.ENTER && !txtId.getText().isEmpty()) {
+            cargarEmpleado(Long.valueOf(txtId.getText()));
+        }
     }
 
     @FXML
@@ -130,6 +139,27 @@ public class EmpleadosViewController extends Controller implements Initializable
 
     @FXML
     private void onActionBtnGuardar(ActionEvent event) {
+            try {
+            String invalidos = validarRequeridos();
+            if (!invalidos.isEmpty()) {
+                new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar empleado", getStage(), invalidos);
+            } else {
+
+                EmpleadoService service = new EmpleadoService();
+                Respuesta respuesta = service.guardarEmpleado(empleado);
+                if (!respuesta.getEstado()) {
+                    new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar empleado", getStage(), respuesta.getMensaje());
+                } else {
+                    unbindEmpleado();
+                    empleado = (EmpleadoDto) respuesta.getResultado("Empleados");
+                    bindEmpleado(false);
+                    new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar empleado", getStage(), "Empleado actualizado correctamente.");
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(EmpleadosViewController.class.getName()).log(Level.SEVERE, "Error guardando el empleado.", ex);
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar empleado", getStage(), "Ocurrio un error guardando el empleado.");
+        }
     }
 
     private void nuevoEmpleado() {
@@ -234,6 +264,21 @@ public class EmpleadosViewController extends Controller implements Initializable
         } else {
             return "Campos requeridos o con problemas de formato [" + invalidos + "].";
         }
+    }
+
+    private void cargarEmpleado(Long id) {
+        EmpleadoService service = new EmpleadoService();
+        Respuesta respuesta = service.getEmpleado(id);
+        if(respuesta.getEstado()){
+            unbindEmpleado();
+            empleado = (EmpleadoDto)respuesta.getResultado("Empleados");
+            bindEmpleado(false);
+            validarAdministrador();
+            validarRequeridos();
+        }else{
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Cargar Empleado", getStage(), respuesta.getMensaje());
+        }
+        
     }
 
     

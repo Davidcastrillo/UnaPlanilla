@@ -21,16 +21,16 @@ import javax.persistence.Query;
  * @author David
  */
 public class EmpleadoService {
-       EntityManager em = EntityManagerHelper.getInstance().getManager();
+    EntityManager em = EntityManagerHelper.getInstance().getManager();
     private EntityTransaction et;
     
     public Respuesta getUsuario(String usuario, String clave) {
         try {      
             Query query = em.createNamedQuery("Empleados.findByUsuarioClave",Empleados.class);
-            query.setParameter("usuario", usuario);
-            query.setParameter("clave", clave);
+            query.setParameter("Usuario", usuario);
+            query.setParameter("Clave", clave);
             EmpleadoDto empleado = new EmpleadoDto((Empleados)query.getSingleResult());
-            return new Respuesta(true, "", "", "Empleado", empleado);
+            return new Respuesta(true, "", "", "Empleados", empleado);
         } catch (NoResultException ex) {
             return new Respuesta(false, "No existe un usuario con las credenciales ingresadas.", "getUsuario NoResultException");
         } catch (NonUniqueResultException ex) {
@@ -40,6 +40,55 @@ public class EmpleadoService {
             Logger.getLogger(EmpleadoService.class.getName()).log(Level.SEVERE, "Error obteniendo el usuario [" + usuario + "]", ex);
             return new Respuesta(false, "Error obteniendo el usuario.", "getUsuario " + ex.getMessage());
         }
+    }
+    
+    
+    public Respuesta guardarEmpleado(EmpleadoDto empleadoDto){
+        try {
+            et = em.getTransaction();
+            et.begin();
+            Empleados empleado;
+            if (empleadoDto.getId() != null && empleadoDto.getId() > 0){
+                empleado = em.find(Empleados.class, empleadoDto.getId());
+                if (empleado == null){
+                    et.rollback();
+                    return new Respuesta(false, "No se encrontró el empleado a modificar.", "guardarEmpleado NoResultException");
+                }
+                empleado.actualizarEmpleado(empleadoDto);
+                empleado = em.merge(empleado);
+            } else{
+                empleado = new Empleados(empleadoDto);
+                em.persist(empleado);
+            }            
+            et.commit();
+            return new Respuesta(true, "", "", "Empleados", new EmpleadoDto(empleado));
+        } catch (Exception ex) {
+            et.rollback();
+            Logger.getLogger(EmpleadoService.class.getName()).log(Level.SEVERE, "Error guardando el empleado.", ex);
+            return new Respuesta(false, "Error guardando el empleado.", "guardarEmpleado " + ex.getMessage());
+            
+          
+          
+        
+    }
+    }
+    public Respuesta getEmpleado(Long id){
+        try {
+            Query query =em.createNamedQuery("Empleados.findByEmpId",Empleados.class);
+            query.setParameter("Id", id);
+            EmpleadoDto empleado = new EmpleadoDto((Empleados)query.getSingleResult());
+            return new Respuesta(true, " ", "", "Empleados", empleado);    
+        }  catch (NoResultException ex) {
+            return new Respuesta(false, "No existe un empleado con el código ingresado.", "getEmpleado NoResultException");
+        } catch (NonUniqueResultException ex) {
+            Logger.getLogger(EmpleadoService.class.getName()).log(Level.SEVERE, "Ocurrio un error al consultar el empleado.", ex);
+            return new Respuesta(false, "Ocurrio un error al consultar el empleado.", "getEmpleado NonUniqueResultException");
+        } catch (Exception ex) {
+            Logger.getLogger(EmpleadoService.class.getName()).log(Level.SEVERE, "Ocurrio un error al consultar el empleado.", ex);
+            return new Respuesta(false, "Ocurrio un error al consultar el empleado.", "getEmpleado " + ex.getMessage());
+        }
+       
+        
     }
     
 }

@@ -5,6 +5,7 @@
 package cr.ac.una.unaplanilla2.model;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -59,8 +60,10 @@ public class EmpleadoDto {
         this.administrador.setValue(empleados.getAdministrador().equalsIgnoreCase("S"));
         this.usuario.set(empleados.getUsuario());
         this.clave.set(empleados.getClave());
-//        this.fIngreso.set(empleados.getFingreso());
-//        this.fSalida.set(empleados.getFsalida());
+        this.fIngreso.set(LocalDate.from(empleados.getFingreso().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+         if (empleados.getFsalida()!= null) {
+            this.fSalida.set(LocalDate.from(empleados.getFsalida().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+         }
         this.estado.setValue(empleados.getEstado().equalsIgnoreCase("A"));
     } 
 

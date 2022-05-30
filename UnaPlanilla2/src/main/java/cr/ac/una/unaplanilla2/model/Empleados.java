@@ -8,6 +8,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.TemporalQueries;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -35,7 +37,7 @@ import javax.persistence.TemporalType;
 @NamedQueries({
     @NamedQuery(name = "Empleados.findAll", query = "SELECT e FROM Empleados e"),
     @NamedQuery(name = "Empleados.findByEmpId", query = "SELECT e FROM Empleados e WHERE e.Id = :Id"),
-    @NamedQuery(name = "Empleados.findByUsuarioClave", query = "SELECT e FROM Empleados e WHERE UPPER(e.Usuario) like :Usuario and UPPER (e.Clave) like :Clave", hints = @QueryHint(name = "eclipselink.refresh", value = "true")),
+    @NamedQuery(name = "Empleados.findByUsuarioClave", query = "SELECT e FROM Empleados e WHERE (e.Usuario) like :Usuario and (e.Clave) like :Clave"),
   /*@NamedQuery(name = "Empleado.findByCedulaNombreApellidos", query = "SELECT e FROM Empleado e WHERE UPPER(e.nombre) like :nombre and UPPER(e.cedula) like :cedula and UPPER(e.primerApellido) like :pApellido and UPPER(e.segundoApellido) like :sApellido", hints = @QueryHint(name = "eclipselink.refresh", value = "true")),
     @NamedQuery(name = "Empleados.findByEmpNombre", query = "SELECT e FROM Empleados e WHERE e.Nombre = :Nombre"),
     @NamedQuery(name = "Empleados.findByEmpPapellido", query = "SELECT e FROM Empleados e WHERE e.Papellido = :Papellido"),
@@ -50,7 +52,7 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Empleados.findByEmpFsalida", query = "SELECT e FROM Empleados e WHERE e.Fsalida = :Fsalida"),
     @NamedQuery(name = "Empleados.findByEmpEstado", query = "SELECT e FROM Empleados e WHERE e.Estado = :Estado"),
   @NamedQuery(name = "Empleados.findByEmpVersion", query = "SELECT e FROM Empleados e WHERE e.empVersion = :empVersion")*/})
-public class Empleados implements Serializable {
+public class Empleados implements Serializable { 
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -132,8 +134,10 @@ public class Empleados implements Serializable {
         this.Cedula = empleadoDto.getCedula();
         this.Genero = empleadoDto.getGenero();
         this.Administrador = empleadoDto.getAdministrador();
-//        this.Fingreso = empleadoDto.getfIngreso();
-//        this.Fsalida = empleadoDto.getfSalida();
+        this.Fingreso = Date.from(empleadoDto.getfIngreso().atStartOfDay(ZoneId.systemDefault()).toInstant());
+         if (empleadoDto.getfSalida()!= null) {
+            this.Fsalida = Date.from(empleadoDto.getfSalida().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        }
         this.Correo= empleadoDto.getCorreo();
         this.Usuario = empleadoDto.getUsuario();
         this.Clave = empleadoDto.getClave();

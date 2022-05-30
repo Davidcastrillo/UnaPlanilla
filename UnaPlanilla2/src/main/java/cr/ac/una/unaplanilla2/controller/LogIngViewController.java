@@ -79,15 +79,15 @@ public class LogIngViewController extends Controller implements Initializable {
             } else if (txtClave.getText() == null || txtClave.getText().isEmpty()) {
                 new Mensaje().showModal(Alert.AlertType.ERROR, "Validación de usuario", (Stage) btnIngresar.getScene().getWindow(), "Es necesario digitar la clave para ingresar al sistema.");
             } else {
-//               EmpleadoService empleadoService = new EmpleadoService();
-//                Respuesta respuesta = empleadoService.getUsuario(txtUsuario.getText(), txtClave.getText());
-//                if(respuesta.getEstado()){
-                    //AppContext.getInstance().set("Usuario", respuesta.getResultado("Empleado"));
+               EmpleadoService empleadoService = new EmpleadoService();
+                Respuesta respuesta = empleadoService.getUsuario(txtUsuario.getText(), txtClave.getText());
+                if(respuesta.getEstado()){
+                    AppContext.getInstance().set("Usuario", respuesta.getResultado("Empleados"));
                     FlowController.getInstance().goMain();
                     getStage().close();
-//                } else {
-//                    new Mensaje().show(Alert.AlertType.ERROR, "Validación Usuario", respuesta.getMensaje());
-//                }
+                } else {
+                    new Mensaje().show(Alert.AlertType.ERROR, "Validación Usuario", respuesta.getMensaje());
+                }
 
             }
         } catch (Exception ex) {
