@@ -8,6 +8,7 @@ import cr.ac.una.unaplanilla2.model.EmpleadoDto;
 import cr.ac.una.unaplanilla2.model.Empleados;
 import cr.ac.una.unaplanilla2.util.EntityManagerHelper;
 import cr.ac.una.unaplanilla2.util.Respuesta;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -90,5 +91,33 @@ public class EmpleadoService {
        
         
     }
-    
+    public Respuesta EliminarEmpleado(Long Id){
+        try {
+            et = em.getTransaction();
+            et.begin();
+            Empleados empleado;
+            if (Id != null && Id > 0){
+                empleado = em.find(Empleados.class, Id);
+                if (empleado == null){
+                    et.rollback();
+                    return new Respuesta(false, "No se encrontró el empleado a eliminar.", "eliminarEmpleado NoResultException");
+                }
+                em.remove(empleado);
+            } else {
+                et.rollback();
+                return new Respuesta(false, "Debe cargar el empleado a eliminar.", "eliminarEmpleado NoResultException");
+            }
+            et.commit();
+            return new Respuesta(true, "", "");
+        } catch (Exception ex) {
+            et.rollback();
+            if (ex.getCause() != null && ex.getCause().getCause().getClass() == SQLIntegrityConstraintViolationException.class) {
+                return new Respuesta(false, "No se puede eliminar el empleado porque tiene relaciones con otros registros.", "eliminarEmpleado " + ex.getMessage());
+            }
+            Logger.getLogger(EmpleadoService.class.getName()).log(Level.SEVERE, "Error eliminando el empleado.", ex);
+            return new Respuesta(false, "Error eliminando el empleado.", "eliminarEmpleado " + ex.getMessage());
+        }
+    }
 }
+    
+

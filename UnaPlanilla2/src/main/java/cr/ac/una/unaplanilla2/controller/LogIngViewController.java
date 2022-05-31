@@ -18,11 +18,14 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -45,6 +48,7 @@ public class LogIngViewController extends Controller implements Initializable {
     private JFXButton btnCancelar;
     @FXML
     private JFXButton btnIngresar;
+     private EventHandler<KeyEvent> keyEnter;
 
     /**
      * Initializes the controller class.
@@ -54,6 +58,7 @@ public class LogIngViewController extends Controller implements Initializable {
         //Forma de redimencionar una imagen
        imvFondo.fitHeightProperty().bind(root.heightProperty());
        imvFondo.fitWidthProperty().bind(root.widthProperty()); 
+       
     }    
 
     @Override
@@ -61,8 +66,11 @@ public class LogIngViewController extends Controller implements Initializable {
         txtClave.clear();
         txtUsuario.clear();
         
-        
-        
+  keyEnter = (KeyEvent event) -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                btnIngresar.fire();
+            }
+        };        
     }
 
     @FXML

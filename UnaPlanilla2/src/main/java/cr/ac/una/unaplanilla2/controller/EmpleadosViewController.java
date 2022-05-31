@@ -135,6 +135,27 @@ public class EmpleadosViewController extends Controller implements Initializable
 
     @FXML
     private void onActionBtnEliminar(ActionEvent event) {
+           try {
+            if (empleado.getId()== null) {
+                new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar empleado", getStage(), "Debe cargar el empleado que desea eliminar.");
+            } else {
+
+                EmpleadoService service = new EmpleadoService();
+                Respuesta respuesta = service.EliminarEmpleado(empleado.getId());
+                if (!respuesta.getEstado()) {
+                    new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar empleado", getStage(), respuesta.getMensaje());
+                } else {
+                    nuevoEmpleado();
+                    new Mensaje().showModal(Alert.AlertType.INFORMATION, "Eliminar empleado", getStage(), "Empleado eliminado correctamente.");
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(EmpleadosViewController.class.getName()).log(Level.SEVERE, "Error eliminando el empleado.", ex);
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar empleado", getStage(), "Ocurrio un error eliminando el empleado.");
+        }  
+        
+        
+        
     }
 
     @FXML
