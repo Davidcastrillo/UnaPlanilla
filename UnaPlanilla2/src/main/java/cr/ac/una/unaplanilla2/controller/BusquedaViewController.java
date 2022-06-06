@@ -7,17 +7,27 @@ package cr.ac.una.unaplanilla2.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import cr.ac.una.unaplanilla2.model.EmpleadoDto;
+import cr.ac.una.unaplanilla2.service.EmpleadoService;
 import cr.ac.una.unaplanilla2.util.Formato;
+import cr.ac.una.unaplanilla2.util.Mensaje;
+import cr.ac.una.unaplanilla2.util.Respuesta;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Cell;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -46,13 +56,19 @@ public class BusquedaViewController extends Controller implements Initializable 
     private JFXButton btnCancelar;
     
     private EventHandler<KeyEvent> keyEnter;
+     private  Object resultado; 
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       BuscarEmpleado();
+        // evento para hacer funcionar el boton de filtrar 
+            keyEnter = (KeyEvent event) -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                btnfFiltrar .fire();
+            }
+        };
     }    
 
     @Override
@@ -62,6 +78,8 @@ public class BusquedaViewController extends Controller implements Initializable 
 
     @FXML
     private void OnActionBtnAceptar(ActionEvent event) {
+      resultado = tbvResultados.getSelectionModel().getSelectedItem();
+        getStage().close();
     }
     
     
@@ -133,14 +151,39 @@ public class BusquedaViewController extends Controller implements Initializable 
             tbvResultados.getColumns().add(tbcPApellido);
             tbvResultados.getColumns().add(tbcSApellido);
             tbvResultados.refresh();
-           
-            
-            
-            
-        } catch (Exception e) {
-            System.out.println("jaja se callo xd");
+            tbvResultados.getItems().clear();
+              // Metodo del Boton de filtrar 
+              // Se le setea un accion para que compla con la funcionalidad sin tenen que crear el acccion desde el Scene builder
+              
+            btnfFiltrar.setOnAction((ActionEvent event) -> {
+                tbvResultados.getItems().clear();
+                EmpleadoService service = new EmpleadoService();
+                
+                String cedula = "%" + txtCed.getText() + "%";
+
+                String nombre = "%" + txtNombre.getText() + "%";
+
+                String pApellido = "%" + txtPapellido.getText() + "%";
+
+                String sApellido = "%" + txtSapellido.getText() + "%";
+
+                Respuesta respuesta = service.getEmpleados(cedula.toUpperCase(), nombre.toUpperCase(), pApellido.toUpperCase(), sApellido.toUpperCase());
+
+                if (respuesta.getEstado()) {
+                    ObservableList<EmpleadoDto> empleados = FXCollections.observableList((List<EmpleadoDto>) respuesta.getResultado("Empleados"));
+                    tbvResultados.setItems(empleados);
+                    tbvResultados.refresh();
+                } else {
+                    new Mensaje().showModal(Alert.AlertType.ERROR, "Consultar empleados", getStage(), respuesta.getMensaje());
+                }
+            });
+        } catch (Exception ex) {
+            Logger.getLogger(BusquedaViewController.class.getName()).log(Level.SEVERE, "Error consultando los empleados.", ex);
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Consultar empleados", getStage(), "Ocurrio un error consultado los empleados.");
         }
-        
+            
+            
+           
         
         
     }
@@ -157,5 +200,14 @@ public class BusquedaViewController extends Controller implements Initializable 
             
     }
     }
+
+    public Object getResultado() {
+        return resultado;
+    }
+
+    public void setResultado(Object resultado) {
+        this.resultado = resultado;
+    }
+    
     
 }

@@ -9,6 +9,8 @@ import cr.ac.una.unaplanilla2.model.Empleados;
 import cr.ac.una.unaplanilla2.util.EntityManagerHelper;
 import cr.ac.una.unaplanilla2.util.Respuesta;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -116,6 +118,27 @@ public class EmpleadoService {
             }
             Logger.getLogger(EmpleadoService.class.getName()).log(Level.SEVERE, "Error eliminando el empleado.", ex);
             return new Respuesta(false, "Error eliminando el empleado.", "eliminarEmpleado " + ex.getMessage());
+        }
+    }
+    
+        public Respuesta getEmpleados(String cedula, String nombre, String pApellido, String sApellido) {
+        try {
+            Query query = em.createNamedQuery("Empleados.findByCedulaNombreApellidos",Empleados.class);
+            query.setParameter("Nombre", nombre);
+            query.setParameter("Cedula", cedula);
+            query.setParameter("Papellido", pApellido);
+            query.setParameter("Sapellido", sApellido);
+            List<Empleados> empleados = (List<Empleados>) query.getResultList();
+            List<EmpleadoDto> empleadosDto = new ArrayList<>();
+            for (Empleados emp : empleados) {
+                empleadosDto.add(new EmpleadoDto(emp));
+            }
+            return new Respuesta(true, "", "", "Empleados", empleadosDto);
+        } catch (NoResultException ex) {
+            return new Respuesta(false, "No existen empleados con los criterios ingresados.", "getEmpleados NoResultException");
+        } catch (Exception ex) {
+            Logger.getLogger(EmpleadoService.class.getName()).log(Level.SEVERE, "Error obteniendo empleados.", ex);
+            return new Respuesta(false, "Error obteniendo empleados.", "getEmpleados " + ex.getMessage());
         }
     }
 }

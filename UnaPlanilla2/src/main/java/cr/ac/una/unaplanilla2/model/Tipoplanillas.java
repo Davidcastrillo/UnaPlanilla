@@ -12,12 +12,15 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -25,47 +28,49 @@ import javax.persistence.Table;
  * @author David
  */
 @Entity
-@Table(name = "PLAN_TIPOPLANILLAS")
+@Table(name = "PLAN_TIPOPLANILLAS ", schema = "una")
 @NamedQueries({
     @NamedQuery(name = "Tipoplanillas.findAll", query = "SELECT t FROM Tipoplanillas t"),
-    @NamedQuery(name = "Tipoplanillas.findByTplaId", query = "SELECT t FROM Tipoplanillas t WHERE t.tplaId = :tplaId"),
-    @NamedQuery(name = "Tipoplanillas.findByTplaCodigo", query = "SELECT t FROM Tipoplanillas t WHERE t.tplaCodigo = :tplaCodigo"),
-    @NamedQuery(name = "Tipoplanillas.findByTplaDescripcion", query = "SELECT t FROM Tipoplanillas t WHERE t.tplaDescripcion = :tplaDescripcion"),
-    @NamedQuery(name = "Tipoplanillas.findByTplaPlaxmes", query = "SELECT t FROM Tipoplanillas t WHERE t.tplaPlaxmes = :tplaPlaxmes"),
-    @NamedQuery(name = "Tipoplanillas.findByTplaAnoultpla", query = "SELECT t FROM Tipoplanillas t WHERE t.tplaAnoultpla = :tplaAnoultpla"),
-    @NamedQuery(name = "Tipoplanillas.findByTplaMesultpla", query = "SELECT t FROM Tipoplanillas t WHERE t.tplaMesultpla = :tplaMesultpla"),
-    @NamedQuery(name = "Tipoplanillas.findByTplaNumultpla", query = "SELECT t FROM Tipoplanillas t WHERE t.tplaNumultpla = :tplaNumultpla"),
-    @NamedQuery(name = "Tipoplanillas.findByTplaEstado", query = "SELECT t FROM Tipoplanillas t WHERE t.tplaEstado = :tplaEstado"),
-    @NamedQuery(name = "Tipoplanillas.findByTplaVersion", query = "SELECT t FROM Tipoplanillas t WHERE t.tplaVersion = :tplaVersion")})
+    @NamedQuery(name = "Tipoplanillas.findByTplaId", query = "SELECT t FROM Tipoplanillas t WHERE t.Id = :Id"),
+    /*@NamedQuery(name = "Tipoplanillas.findByTplaCodigo", query = "SELECT t FROM Tipoplanillas t WHERE t.Codigo = :Codigo"),
+    @NamedQuery(name = "Tipoplanillas.findByTplaDescripcion", query = "SELECT t FROM Tipoplanillas t WHERE t.Descripcion = :Descripcion"),
+    @NamedQuery(name = "Tipoplanillas.findByTplaPlaxmes", query = "SELECT t FROM Tipoplanillas t WHERE t.Plaxmes = :Plaxmes"),
+    @NamedQuery(name = "Tipoplanillas.findByTplaAnoultpla", query = "SELECT t FROM Tipoplanillas t WHERE t.Anoultpla = :Anoultpla"),
+    @NamedQuery(name = "Tipoplanillas.findByTplaMesultpla", query = "SELECT t FROM Tipoplanillas t WHERE t.Mesultpla = :Mesultpla"),
+    @NamedQuery(name = "Tipoplanillas.findByTplaNumultpla", query = "SELECT t FROM Tipoplanillas t WHERE t.Numultpla = :Numultpla"),
+    @NamedQuery(name = "Tipoplanillas.findByTplaEstado", query = "SELECT t FROM Tipoplanillas t WHERE t.Estado = :Estado"),
+    @NamedQuery(name = "Tipoplanillas.findByTplaVersion", query = "SELECT t FROM Tipoplanillas t WHERE t.Version = :Version")*/})
 public class Tipoplanillas implements Serializable {
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
+    @SequenceGenerator(name = "PLAM_TIPOPLANILLA_TPLA_ID_GENERATOR", sequenceName = "PLAN_TIPOPLANILLAS_SEQ01", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PLAM_TIPOPLANILLA_TPLA_ID_GENERATOR")
     @Basic(optional = false)
     @Column(name = "TPLA_ID")
-    private BigDecimal tplaId;
+    private Long Id;
     @Basic(optional = false)
     @Column(name = "TPLA_CODIGO")
-    private String tplaCodigo;
+    private String Codigo;
     @Basic(optional = false)
     @Column(name = "TPLA_DESCRIPCION")
-    private String tplaDescripcion;
+    private String Descripcion;
     @Basic(optional = false)
     @Column(name = "TPLA_PLAXMES")
-    private BigInteger tplaPlaxmes;
+    private Integer Plaxmes;
     @Column(name = "TPLA_ANOULTPLA")
-    private BigInteger tplaAnoultpla;
+    private Integer Anoultpla;
     @Column(name = "TPLA_MESULTPLA")
-    private BigInteger tplaMesultpla;
+    private Integer Mesultpla;
     @Column(name = "TPLA_NUMULTPLA")
-    private BigInteger tplaNumultpla;
+    private Integer Numultpla;
     @Basic(optional = false)
     @Column(name = "TPLA_ESTADO")
-    private String tplaEstado;
+    private String Estado;
     @Basic(optional = false)
     @Column(name = "TPLA_VERSION")
-    private BigInteger tplaVersion;
+    private Integer Version;
     @JoinTable(name = "PLAN_EMPLEADOSPLANILLA", joinColumns = {
         @JoinColumn(name = "EXP_IDTPLA", referencedColumnName = "TPLA_ID")}, inverseJoinColumns = {
         @JoinColumn(name = "EXP_IDEMP", referencedColumnName = "EMP_ID")})
@@ -75,89 +80,104 @@ public class Tipoplanillas implements Serializable {
     public Tipoplanillas() {
     }
 
-    public Tipoplanillas(BigDecimal tplaId) {
-        this.tplaId = tplaId;
+    public Tipoplanillas(Long tplaId) {
+        this.Id = tplaId;
     }
 
-    public Tipoplanillas(BigDecimal tplaId, String tplaCodigo, String tplaDescripcion, BigInteger tplaPlaxmes, String tplaEstado, BigInteger tplaVersion) {
-        this.tplaId = tplaId;
-        this.tplaCodigo = tplaCodigo;
-        this.tplaDescripcion = tplaDescripcion;
-        this.tplaPlaxmes = tplaPlaxmes;
-        this.tplaEstado = tplaEstado;
-        this.tplaVersion = tplaVersion;
+    public Tipoplanillas(Long tplaId, String tplaCodigo, String tplaDescripcion, Integer tplaPlaxmes, String tplaEstado, Integer tplaVersion) {
+        this.Id = tplaId;
+        this.Codigo = tplaCodigo;
+        this.Descripcion = tplaDescripcion;
+        this.Plaxmes = tplaPlaxmes;
+        this.Estado = tplaEstado;
+        this.Version = tplaVersion;
+    }
+    
+    public Tipoplanillas(TipoPlanillaDto tipoPlanillaDto) {
+        this.Id = tipoPlanillaDto.getId();
+        actualizarTipoPlanilla(tipoPlanillaDto);
     }
 
-    public BigDecimal getTplaId() {
-        return tplaId;
+    public void actualizarTipoPlanilla(TipoPlanillaDto tipoPlanillaDto) {
+        this.Codigo = tipoPlanillaDto.getCodigo();
+        this.Descripcion = tipoPlanillaDto.getDescripcion();
+        this.Plaxmes = tipoPlanillaDto.getPlanillasPorMes();
+        this.Anoultpla = tipoPlanillaDto.getAnoUltimaPlanilla();
+        this.Mesultpla = tipoPlanillaDto.getMesUltimaPlanilla();
+        this.Numultpla = tipoPlanillaDto.getNumeroUltimaPlanilla();
+        this.Estado = tipoPlanillaDto.getEstado();
     }
 
-    public void setTplaId(BigDecimal tplaId) {
-        this.tplaId = tplaId;
+    public Long getId() {
+        return Id;
     }
 
-    public String getTplaCodigo() {
-        return tplaCodigo;
+    public void setId(Long Id) {
+        this.Id = Id;
     }
 
-    public void setTplaCodigo(String tplaCodigo) {
-        this.tplaCodigo = tplaCodigo;
+    public String getCodigo() {
+        return Codigo;
     }
 
-    public String getTplaDescripcion() {
-        return tplaDescripcion;
+    public void setCodigo(String Codigo) {
+        this.Codigo = Codigo;
     }
 
-    public void setTplaDescripcion(String tplaDescripcion) {
-        this.tplaDescripcion = tplaDescripcion;
+    public String getDescripcion() {
+        return Descripcion;
     }
 
-    public BigInteger getTplaPlaxmes() {
-        return tplaPlaxmes;
+    public void setDescripcion(String Descripcion) {
+        this.Descripcion = Descripcion;
     }
 
-    public void setTplaPlaxmes(BigInteger tplaPlaxmes) {
-        this.tplaPlaxmes = tplaPlaxmes;
+    public Integer getPlaxmes() {
+        return Plaxmes;
     }
 
-    public BigInteger getTplaAnoultpla() {
-        return tplaAnoultpla;
+    public void setPlaxmes(Integer Plaxmes) {
+        this.Plaxmes = Plaxmes;
     }
 
-    public void setTplaAnoultpla(BigInteger tplaAnoultpla) {
-        this.tplaAnoultpla = tplaAnoultpla;
+    public Integer getAnoultpla() {
+        return Anoultpla;
     }
 
-    public BigInteger getTplaMesultpla() {
-        return tplaMesultpla;
+    public void setAnoultpla(Integer Anoultpla) {
+        this.Anoultpla = Anoultpla;
     }
 
-    public void setTplaMesultpla(BigInteger tplaMesultpla) {
-        this.tplaMesultpla = tplaMesultpla;
+    public Integer getMesultpla() {
+        return Mesultpla;
     }
 
-    public BigInteger getTplaNumultpla() {
-        return tplaNumultpla;
+    public void setMesultpla(Integer Mesultpla) {
+        this.Mesultpla = Mesultpla;
     }
 
-    public void setTplaNumultpla(BigInteger tplaNumultpla) {
-        this.tplaNumultpla = tplaNumultpla;
+    public Integer getNumultpla() {
+        return Numultpla;
     }
 
-    public String getTplaEstado() {
-        return tplaEstado;
+    public void setNumultpla(Integer Numultpla) {
+        this.Numultpla = Numultpla;
     }
 
-    public void setTplaEstado(String tplaEstado) {
-        this.tplaEstado = tplaEstado;
+    public String getEstado() {
+        return Estado;
     }
 
-    public BigInteger getTplaVersion() {
-        return tplaVersion;
+    public void setEstado(String Estado) {
+        this.Estado = Estado;
     }
 
-    public void setTplaVersion(BigInteger tplaVersion) {
-        this.tplaVersion = tplaVersion;
+    public Integer getVersion() {
+        return Version;
+    }
+
+    public void setVersion(Integer Version) {
+        this.Version = Version;
     }
 
     public List<Empleados> getEmpleadosList() {
@@ -171,7 +191,7 @@ public class Tipoplanillas implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (tplaId != null ? tplaId.hashCode() : 0);
+        hash += (Id != null ? Id.hashCode() : 0);
         return hash;
     }
 
@@ -182,7 +202,7 @@ public class Tipoplanillas implements Serializable {
             return false;
         }
         Tipoplanillas other = (Tipoplanillas) object;
-        if ((this.tplaId == null && other.tplaId != null) || (this.tplaId != null && !this.tplaId.equals(other.tplaId))) {
+        if ((this.Id == null && other.Id != null) || (this.Id != null && !this.Id.equals(other.Id))) {
             return false;
         }
         return true;
@@ -190,7 +210,7 @@ public class Tipoplanillas implements Serializable {
 
     @Override
     public String toString() {
-        return "cr.ac.una.unaplanilla2.model.Tipoplanillas[ tplaId=" + tplaId + " ]";
+        return "cr.ac.una.unaplanilla2.model.Tipoplanillas[ tplaId=" + Id + " ]";
     }
     
 }

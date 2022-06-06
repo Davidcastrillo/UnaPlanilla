@@ -129,8 +129,17 @@ public class EmpleadosViewController extends Controller implements Initializable
 
     @FXML
     private void onActionBtnBuscar(ActionEvent event) {
-        FlowController.getInstance().goViewInWindowModal("BusquedaView",getStage(),true);
-        
+        // se instancia el controlador para poder invocar el metodo de busqueda de la ventana que se esta consultado como funciona 
+        BusquedaViewController busquedaController = (BusquedaViewController) FlowController.getInstance().getController("BusquedaView");
+        busquedaController.BuscarEmpleado();
+        FlowController.getInstance().goViewInWindowModal("BusquedaView", getStage(),true);
+        EmpleadoDto empleadoDto = (EmpleadoDto) busquedaController.getResultado();
+        if (empleadoDto != null) {
+            
+            //con el id que nos regresa el resultado invocamos el metodo de cargar para cargarlo en la ventana de edicion .
+            cargarEmpleado(empleadoDto.getId());
+        }
+     
     }
 
     @FXML
