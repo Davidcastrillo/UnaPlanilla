@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/15.0.1" fx:controller="cr.ac.una.unaplanilla2.controller.TiposPlanillaController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.unaplanilla2.controller.TiposPlanillaViewController">
     <stylesheets>
         <URL value="@Styles.css" />
     </stylesheets>
@@ -80,7 +80,7 @@
                               </AnchorPane>
                            </content>
                         </Tab>
-                        <Tab fx:id="tbpInclusionEmpleados" text="Inclusion Empleados">
+                        <Tab fx:id="tbpInclusionEmpleados" onSelectionChanged="#onSelectionChangedTbpInclusionEmpleados" text="Inclusion Empleados">
                            <content>
                               <AnchorPane>
                                  <padding>

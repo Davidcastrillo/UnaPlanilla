@@ -5,8 +5,6 @@
 package cr.ac.una.unaplanilla2.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -20,19 +18,24 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.QueryHint;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author David
  */
 @Entity
-@Table(name = "PLAN_TIPOPLANILLAS ", schema = "una")
+@Table(name = "PLAN_TIPOPLANILLAS",schema = "una")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Tipoplanillas.findAll", query = "SELECT t FROM Tipoplanillas t"),
     @NamedQuery(name = "Tipoplanillas.findByTplaId", query = "SELECT t FROM Tipoplanillas t WHERE t.Id = :Id"),
-    /*@NamedQuery(name = "Tipoplanillas.findByTplaCodigo", query = "SELECT t FROM Tipoplanillas t WHERE t.Codigo = :Codigo"),
+    @NamedQuery(name = "Tipoplanillas.findbythings", query = "SELECT t FROM Tipoplanillas t WHERE UPPER(t.Codigo) like :Codigo and UPPER(t.Descripcion) like :Descripcion and UPPER(t.Plaxmes) like :Plaxmes ", hints = @QueryHint(name = "eclipselink.refresh", value = "true")),
+   // @NamedQuery(name = "Tipoplanillas.findBylosempleados", query = "SELECT t FROM Tipoplanillas t Join t.Empleados e WHERE UPPER(t.Codigo) like :Codigo and  UPPER(e.Cedula) like :Cedula and UPPER(e.Id) like :Id"),
+   /* @NamedQuery(name = "Tipoplanillas.findByTplaCodigo", query = "SELECT t FROM Tipoplanillas t WHERE t.Codigo = :Codigo"),
     @NamedQuery(name = "Tipoplanillas.findByTplaDescripcion", query = "SELECT t FROM Tipoplanillas t WHERE t.Descripcion = :Descripcion"),
     @NamedQuery(name = "Tipoplanillas.findByTplaPlaxmes", query = "SELECT t FROM Tipoplanillas t WHERE t.Plaxmes = :Plaxmes"),
     @NamedQuery(name = "Tipoplanillas.findByTplaAnoultpla", query = "SELECT t FROM Tipoplanillas t WHERE t.Anoultpla = :Anoultpla"),
@@ -93,12 +96,12 @@ public class Tipoplanillas implements Serializable {
         this.Version = tplaVersion;
     }
     
-    public Tipoplanillas(TipoPlanillaDto tipoPlanillaDto) {
+    public Tipoplanillas(TipoplanillaDto tipoPlanillaDto) {
         this.Id = tipoPlanillaDto.getId();
         actualizarTipoPlanilla(tipoPlanillaDto);
     }
 
-    public void actualizarTipoPlanilla(TipoPlanillaDto tipoPlanillaDto) {
+    public void actualizarTipoPlanilla(TipoplanillaDto tipoPlanillaDto) {
         this.Codigo = tipoPlanillaDto.getCodigo();
         this.Descripcion = tipoPlanillaDto.getDescripcion();
         this.Plaxmes = tipoPlanillaDto.getPlanillasPorMes();
@@ -195,18 +198,6 @@ public class Tipoplanillas implements Serializable {
         return hash;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Tipoplanillas)) {
-            return false;
-        }
-        Tipoplanillas other = (Tipoplanillas) object;
-        if ((this.Id == null && other.Id != null) || (this.Id != null && !this.Id.equals(other.Id))) {
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public String toString() {

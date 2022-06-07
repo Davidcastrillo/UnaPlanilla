@@ -52,7 +52,7 @@ public class PrincipalViewController extends Controller implements Initializable
 
     @FXML
     private void OnActionBtnTipoPlanilla(ActionEvent event) {
-         FlowController.getInstance().goView("TiposPlanilla");
+         FlowController.getInstance().goView("TiposPlanillaView");
     }
 
     @FXML

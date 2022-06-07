@@ -7,7 +7,9 @@ package cr.ac.una.unaplanilla2.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import cr.ac.una.unaplanilla2.model.EmpleadoDto;
+import cr.ac.una.unaplanilla2.model.TipoplanillaDto;
 import cr.ac.una.unaplanilla2.service.EmpleadoService;
+import cr.ac.una.unaplanilla2.service.TipoPlanillaService;
 import cr.ac.una.unaplanilla2.util.Formato;
 import cr.ac.una.unaplanilla2.util.Mensaje;
 import cr.ac.una.unaplanilla2.util.Respuesta;
@@ -187,6 +189,102 @@ public class BusquedaViewController extends Controller implements Initializable 
         
         
     }
+      public void busquedaPlanillas() {
+        try {
+            lblTitulo.setText("Búsqueda de planillas");
+            JFXTextField txtCod = new JFXTextField();
+            txtCod.setLabelFloat(true);
+            txtCod.setPromptText("Codigo");
+            txtCod.setOnKeyPressed(keyEnter);
+            txtCod.setTextFormatter(Formato.getInstance().cedulaFormat(40));
+
+            JFXTextField txtDescripcion = new JFXTextField();
+            txtDescripcion.setLabelFloat(true);
+            txtDescripcion.setPromptText("Descripcion");
+            txtDescripcion.setTextFormatter(Formato.getInstance().letrasFormat(30));
+            txtDescripcion.setOnKeyPressed(keyEnter);
+
+            JFXTextField txtPlanillaxMes = new JFXTextField();
+            txtPlanillaxMes.setLabelFloat(true);
+            txtPlanillaxMes.setPromptText("Planilla x Mes");
+            txtPlanillaxMes.setTextFormatter(Formato.getInstance().cedulaFormat(30));
+            txtPlanillaxMes.setOnKeyPressed(keyEnter);
+
+            ////
+            JFXTextField txtCedula = new JFXTextField();
+            txtCedula.setLabelFloat(true);
+            txtCedula.setPromptText("Cédula");
+            txtCedula.setOnKeyPressed(keyEnter);
+            txtCedula.setTextFormatter(Formato.getInstance().cedulaFormat(40));
+
+            JFXTextField txtId = new JFXTextField();
+            txtId.setLabelFloat(true);
+            txtId.setPromptText("Id del Empleado");
+            txtId.setOnKeyPressed(keyEnter);
+            txtId.setTextFormatter(Formato.getInstance().cedulaFormat(40));
+            vbxParametros.getChildren().clear();
+            vbxParametros.getChildren().add(txtCod);
+            vbxParametros.getChildren().add(txtDescripcion);
+            vbxParametros.getChildren().add(txtPlanillaxMes);
+            vbxParametros.getChildren().add(txtId);
+            vbxParametros.getChildren().add(txtCedula);
+
+            tbvResultados.getColumns().clear();
+            tbvResultados.getItems().clear();
+
+            TableColumn<TipoplanillaDto, String> tbcIdP = new TableColumn<>("Id Planilla");
+            tbcIdP.setPrefWidth(100);
+            tbcIdP.setCellValueFactory(cd -> cd.getValue().id);
+
+            TableColumn<TipoplanillaDto, String> tbcCodP = new TableColumn<>("Cod Planilla");
+            tbcCodP.setPrefWidth(100);
+            tbcCodP.setCellValueFactory(cd -> cd.getValue().codigo);
+
+            TableColumn<TipoplanillaDto, String> tbcDescrp = new TableColumn<>("Descripcion Planilla");
+            tbcDescrp.setPrefWidth(100);
+            tbcDescrp.setCellValueFactory(cd -> cd.getValue().descripcion);
+
+            TableColumn<TipoplanillaDto, String> tbcPlaXmes = new TableColumn<>("Planilla por Mes");
+            tbcPlaXmes.setPrefWidth(150);
+            tbcPlaXmes.setCellValueFactory(cd -> cd.getValue().planillasPorMes);
+
+            tbvResultados.getColumns().add(tbcIdP);
+            tbvResultados.getColumns().add(tbcCodP);
+            tbvResultados.getColumns().add(tbcDescrp);
+            tbvResultados.getColumns().add(tbcPlaXmes);
+            tbvResultados.refresh();
+//            btnfFiltrar.setOnMouseClicked((event) -> {
+//                tbvResultados.getItems().clear();
+//                TipoPlanillaService service = new TipoPlanillaService();
+//                String idP = "%" + tbcIdP.getText() + "%";
+//
+//                String cod = "%" + txtCod.getText() + "%";
+//
+//                String Descri = "%" + txtDescripcion.getText() + "%";
+//
+//                String PlxM = "%" + txtPlanillaxMes.getText() + "%";
+//
+//                String cedula = "%" + txtCedula.getText() + "%";
+//
+//                String idEmp = "%" + txtId.getText() + "%";
+//
+//                Respuesta respuesta = service.getTipoplanillas(cod.toUpperCase(), Descri.toUpperCase(), PlxM.toUpperCase(),idEmp.toUpperCase(),cedula.toUpperCase());
+//
+//                if (respuesta.getEstado()) {
+//                    ObservableList<TipoplanillaDto> tipoplani = FXCollections.observableList((List<TipoplanillaDto>) respuesta.getResultado("TipoPlanillas"));
+//                    tbvResultados.setItems(tipoplani);
+//                    tbvResultados.refresh();
+//                } else {
+//                    new Mensaje().showModal(Alert.AlertType.ERROR, "Consultar empleados", getStage(), respuesta.getMensaje());
+//                }
+//            });
+
+        } catch (Exception ex) {
+            Logger.getLogger(BusquedaViewController.class.getName()).log(Level.SEVERE, "Error consultando los empleados.", ex);
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Consultar empleados", getStage(), "Ocurrio un error consultado los empleados.");
+        }
+    }
+
 
     @FXML
     private void OnActionBtnCancelar(ActionEvent event) {

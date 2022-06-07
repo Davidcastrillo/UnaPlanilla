@@ -15,8 +15,8 @@ import javafx.collections.ObservableList;
  *
  * @author David
  */
-public class TipoPlanillaDto {
-        public SimpleStringProperty id;
+public class TipoplanillaDto {
+    public SimpleStringProperty id;
     public SimpleStringProperty codigo;
     public SimpleStringProperty descripcion;
     public SimpleStringProperty planillasPorMes;
@@ -28,7 +28,7 @@ public class TipoPlanillaDto {
     ObservableList<EmpleadoDto> empleados;
     List<EmpleadoDto> empleadosEliminados;
 
-    public TipoPlanillaDto() {
+    public TipoplanillaDto() {
         this.modificado = false;
         this.id = new SimpleStringProperty();
         this.codigo = new SimpleStringProperty();
@@ -39,7 +39,7 @@ public class TipoPlanillaDto {
         empleadosEliminados = new ArrayList<>();
     }
 
-    public TipoPlanillaDto(Tipoplanillas tipoPlanilla) {
+    public TipoplanillaDto(Tipoplanillas tipoPlanilla) {
         this();
         this.id.set(tipoPlanilla.getId().toString());
         this.codigo.set(tipoPlanilla.getCodigo());

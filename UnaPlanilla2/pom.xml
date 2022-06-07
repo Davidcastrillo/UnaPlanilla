@@ -82,6 +82,12 @@
             <version>2.7.9</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>cr.ac.una</groupId>
+            <artifactId>UnaPlanilla</artifactId>
+            <version>1.0</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
