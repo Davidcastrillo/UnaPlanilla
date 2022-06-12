@@ -39,7 +39,7 @@ public class TipoplanillaDto {
         empleadosEliminados = new ArrayList<>();
     }
 
-    public TipoplanillaDto(Tipoplanillas tipoPlanilla) {
+    public TipoplanillaDto(TipoPlanillas tipoPlanilla) {
         this();
         this.id.set(tipoPlanilla.getId().toString());
         this.codigo.set(tipoPlanilla.getCodigo());

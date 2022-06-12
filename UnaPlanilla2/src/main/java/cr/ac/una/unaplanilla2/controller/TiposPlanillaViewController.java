@@ -87,7 +87,7 @@ public class TiposPlanillaViewController extends  Controller implements Initiali
     private JFXButton btnEliminar;
     @FXML
     private JFXButton btnGuardar;
-     private TipoplanillaDto tipoPlanillaDto;
+    private TipoplanillaDto tipoPlanillaDto;
     private EmpleadoDto empleadoDto;
     
      List<Node> requeridos = new ArrayList<>();
@@ -113,7 +113,27 @@ public class TiposPlanillaViewController extends  Controller implements Initiali
         tbcEliminar.setCellFactory((TableColumn<EmpleadoDto, Boolean> p) -> new ButtonCell());
  
         
+     //
      
+     
+     
+     
+       tbcCodigo.setCellValueFactory(cd->cd.getValue().id);
+        tbcNombre.setCellValueFactory(cd->cd.getValue().nombre);
+        tbvEmpleados.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            unbindEmpleado();
+            if(newValue != null){
+                unbindEmpleado();
+                empleadoDto = newValue;
+                bindEmpleado(false);
+            } else {
+                nuevoEmpleado();
+                if(tbvEmpleados.getItems().isEmpty()){
+                    cargarEmpleados(); //carga los empleados en la tabla ya que hace la union con la lista de empleados
+                    
+                }
+            }
+        });
         // TODO
     }    
 

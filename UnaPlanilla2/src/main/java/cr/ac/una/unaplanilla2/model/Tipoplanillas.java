@@ -31,19 +31,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "PLAN_TIPOPLANILLAS",schema = "una")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Tipoplanillas.findAll", query = "SELECT t FROM Tipoplanillas t"),
-    @NamedQuery(name = "Tipoplanillas.findByTplaId", query = "SELECT t FROM Tipoplanillas t WHERE t.Id = :Id"),
-    @NamedQuery(name = "Tipoplanillas.findbythings", query = "SELECT t FROM Tipoplanillas t WHERE UPPER(t.Codigo) like :Codigo and UPPER(t.Descripcion) like :Descripcion and UPPER(t.Plaxmes) like :Plaxmes ", hints = @QueryHint(name = "eclipselink.refresh", value = "true")),
-   // @NamedQuery(name = "Tipoplanillas.findBylosempleados", query = "SELECT t FROM Tipoplanillas t Join t.Empleados e WHERE UPPER(t.Codigo) like :Codigo and  UPPER(e.Cedula) like :Cedula and UPPER(e.Id) like :Id"),
-   /* @NamedQuery(name = "Tipoplanillas.findByTplaCodigo", query = "SELECT t FROM Tipoplanillas t WHERE t.Codigo = :Codigo"),
-    @NamedQuery(name = "Tipoplanillas.findByTplaDescripcion", query = "SELECT t FROM Tipoplanillas t WHERE t.Descripcion = :Descripcion"),
-    @NamedQuery(name = "Tipoplanillas.findByTplaPlaxmes", query = "SELECT t FROM Tipoplanillas t WHERE t.Plaxmes = :Plaxmes"),
-    @NamedQuery(name = "Tipoplanillas.findByTplaAnoultpla", query = "SELECT t FROM Tipoplanillas t WHERE t.Anoultpla = :Anoultpla"),
-    @NamedQuery(name = "Tipoplanillas.findByTplaMesultpla", query = "SELECT t FROM Tipoplanillas t WHERE t.Mesultpla = :Mesultpla"),
-    @NamedQuery(name = "Tipoplanillas.findByTplaNumultpla", query = "SELECT t FROM Tipoplanillas t WHERE t.Numultpla = :Numultpla"),
-    @NamedQuery(name = "Tipoplanillas.findByTplaEstado", query = "SELECT t FROM Tipoplanillas t WHERE t.Estado = :Estado"),
-    @NamedQuery(name = "Tipoplanillas.findByTplaVersion", query = "SELECT t FROM Tipoplanillas t WHERE t.Version = :Version")*/})
-public class Tipoplanillas implements Serializable {
+    @NamedQuery(name = "TipoPlanillas.findAll", query = "SELECT t FROM TipoPlanillas t"),
+    @NamedQuery(name = "TipoPlanillas.findByTplaId", query = "SELECT t FROM TipoPlanillas t WHERE t.Id = :Id"),
+    @NamedQuery(name = "TipoPlanillas.findbythings", query = "SELECT t FROM TipoPlanillas t WHERE UPPER(t.Codigo) like :Codigo and UPPER(t.Descripcion) like :Descripcion and UPPER(t.Plaxmes) like :Plaxmes ", hints = @QueryHint(name = "eclipselink.refresh", value = "true")),
+   /* @NamedQuery(name = "TipoPlanillas.findbyEmp", query = "SELECT t FROM TipoPlanillas t Join t.Empleado e WHERE UPPER(t.Codigo) like :Codigo and  UPPER(e.Cedula) like :Cedula and UPPER(e.Id) like :Id",hints = @QueryHint(name = "eclipselink.refresh", value = "true")),
+   /* @NamedQuery(name = "TipoPlanillas.findByTplaCodigo", query = "SELECT t FROM TipoPlanillas t WHERE t.Codigo = :Codigo"),
+    @NamedQuery(name = "TipoPlanillas.findByTplaDescripcion", query = "SELECT t FROM TipoPlanillas t WHERE t.Descripcion = :Descripcion"),
+    @NamedQuery(name = "TipoPlanillas.findByTplaPlaxmes", query = "SELECT t FROM TipoPlanillas t WHERE t.Plaxmes = :Plaxmes"),
+    @NamedQuery(name = "TipoPlanillas.findByTplaAnoultpla", query = "SELECT t FROM TipoPlanillas t WHERE t.Anoultpla = :Anoultpla"),
+    @NamedQuery(name = "TipoPlanillas.findByTplaMesultpla", query = "SELECT t FROM TipoPlanillas t WHERE t.Mesultpla = :Mesultpla"),
+    @NamedQuery(name = "TipoPlanillas.findByTplaNumultpla", query = "SELECT t FROM TipoPlanillas t WHERE t.Numultpla = :Numultpla"),
+    @NamedQuery(name = "TipoPlanillas.findByTplaEstado", query = "SELECT t FROM TipoPlanillas t WHERE t.Estado = :Estado"),
+    @NamedQuery(name = "TipoPlanillas.findByTplaVersion", query = "SELECT t FROM TipoPlanillas t WHERE t.Version = :Version")*/})
+public class TipoPlanillas implements Serializable {
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -78,16 +78,16 @@ public class Tipoplanillas implements Serializable {
         @JoinColumn(name = "EXP_IDTPLA", referencedColumnName = "TPLA_ID")}, inverseJoinColumns = {
         @JoinColumn(name = "EXP_IDEMP", referencedColumnName = "EMP_ID")})
     @ManyToMany(fetch = FetchType.LAZY)
-    private List<Empleados> empleadosList;
+    private List<Empleado> empleadosList;
 
-    public Tipoplanillas() {
+    public TipoPlanillas() {
     }
 
-    public Tipoplanillas(Long tplaId) {
+    public TipoPlanillas(Long tplaId) {
         this.Id = tplaId;
     }
 
-    public Tipoplanillas(Long tplaId, String tplaCodigo, String tplaDescripcion, Integer tplaPlaxmes, String tplaEstado, Integer tplaVersion) {
+    public TipoPlanillas(Long tplaId, String tplaCodigo, String tplaDescripcion, Integer tplaPlaxmes, String tplaEstado, Integer tplaVersion) {
         this.Id = tplaId;
         this.Codigo = tplaCodigo;
         this.Descripcion = tplaDescripcion;
@@ -96,7 +96,7 @@ public class Tipoplanillas implements Serializable {
         this.Version = tplaVersion;
     }
     
-    public Tipoplanillas(TipoplanillaDto tipoPlanillaDto) {
+    public TipoPlanillas(TipoplanillaDto tipoPlanillaDto) {
         this.Id = tipoPlanillaDto.getId();
         actualizarTipoPlanilla(tipoPlanillaDto);
     }
@@ -183,11 +183,11 @@ public class Tipoplanillas implements Serializable {
         this.Version = Version;
     }
 
-    public List<Empleados> getEmpleadosList() {
+    public List<Empleado> getEmpleadosList() {
         return empleadosList;
     }
 
-    public void setEmpleadosList(List<Empleados> empleadosList) {
+    public void setEmpleadosList(List<Empleado> empleadosList) {
         this.empleadosList = empleadosList;
     }
 

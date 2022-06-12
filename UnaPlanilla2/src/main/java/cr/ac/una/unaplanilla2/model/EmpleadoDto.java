@@ -6,6 +6,7 @@ package cr.ac.una.unaplanilla2.model;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Objects;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -48,7 +49,7 @@ public class EmpleadoDto {
         this.estado = new SimpleBooleanProperty(true);
         this.modificado = false;
     }
-    public EmpleadoDto(Empleados empleados) {
+    public EmpleadoDto(Empleado empleados) {
         this();
         this.id.set(empleados.getId().toString());
         this.nombre.set(empleados.getNombre());
@@ -181,6 +182,28 @@ public class EmpleadoDto {
 
     public void setEstado(String estado) {
         this.estado.setValue(estado.equalsIgnoreCase("A"));
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final EmpleadoDto other = (EmpleadoDto) obj;
+        return Objects.equals(this.id.get(), other.id.get());
     }
     
     

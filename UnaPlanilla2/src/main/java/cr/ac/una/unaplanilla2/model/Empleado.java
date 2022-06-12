@@ -35,24 +35,24 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "PLAN_EMPLEADOS",schema = "una")
 @NamedQueries({
-    @NamedQuery(name = "Empleados.findAll", query = "SELECT e FROM Empleados e"),
-    @NamedQuery(name = "Empleados.findByEmpId", query = "SELECT e FROM Empleados e WHERE e.Id = :Id"),
-    @NamedQuery(name = "Empleados.findByUsuarioClave", query = "SELECT e FROM Empleados e WHERE (e.Usuario) like :Usuario and (e.Clave) like :Clave"),
-  @NamedQuery(name = "Empleados.findByCedulaNombreApellidos", query = "SELECT e FROM Empleados e WHERE UPPER(e.Nombre) like :Nombre and UPPER(e.Cedula) like :Cedula and UPPER(e.Papellido) like :Papellido and UPPER(e.Sapellido) like :Sapellido", hints = @QueryHint(name = "eclipselink.refresh", value = "true")),
-    /*@NamedQuery(name = "Empleados.findByEmpNombre", query = "SELECT e FROM Empleados e WHERE e.Nombre = :Nombre"),
-    @NamedQuery(name = "Empleados.findByEmpPapellido", query = "SELECT e FROM Empleados e WHERE e.Papellido = :Papellido"),
-    @NamedQuery(name = "Empleados.findByEmpSapellido", query = "SELECT e FROM Empleados e WHERE e.Sapellido = :Sapellido"),
-    @NamedQuery(name = "Empleados.findByEmpCedula", query = "SELECT e FROM Empleados e WHERE e.Cedula = :Cedula"),
-    @NamedQuery(name = "Empleados.findByEmpGenero", query = "SELECT e FROM Empleados e WHERE e.Genero = :Genero"),
-    @NamedQuery(name = "Empleados.findByEmpCorreo", query = "SELECT e FROM Empleados e WHERE e.Correo = :Correo"),
-    @NamedQuery(name = "Empleados.findByEmpAdministrador", query = "SELECT e FROM Empleados e WHERE e.Administrador = :Administrador"),
-    @NamedQuery(name = "Empleados.findByEmpUsuario", query = "SELECT e FROM Empleados e WHERE e.Usuario = :Usuario"),
-    @NamedQuery(name = "Empleados.findByEmpClave", query = "SELECT e FROM Empleados e WHERE e.Clave = :Clave"),
-    @NamedQuery(name = "Empleados.findByEmpFingreso", query = "SELECT e FROM Empleados e WHERE e.Fingreso = :Fingreso"),
-    @NamedQuery(name = "Empleados.findByEmpFsalida", query = "SELECT e FROM Empleados e WHERE e.Fsalida = :Fsalida"),
-    @NamedQuery(name = "Empleados.findByEmpEstado", query = "SELECT e FROM Empleados e WHERE e.Estado = :Estado"),
-  @NamedQuery(name = "Empleados.findByEmpVersion", query = "SELECT e FROM Empleados e WHERE e.empVersion = :empVersion")*/})
-public class Empleados implements Serializable { 
+    @NamedQuery(name = "Empleado.findAll", query = "SELECT e FROM Empleado e"),
+    @NamedQuery(name = "Empleado.findByEmpId", query = "SELECT e FROM Empleado e WHERE e.Id = :Id"),
+    @NamedQuery(name = "Empleado.findByUsuarioClave", query = "SELECT e FROM Empleado e WHERE (e.Usuario) like :Usuario and (e.Clave) like :Clave"),
+  @NamedQuery(name = "Empleado.findByCedulaNombreApellidos", query = "SELECT e FROM Empleado e WHERE UPPER(e.Nombre) like :Nombre and UPPER(e.Cedula) like :Cedula and UPPER(e.Papellido) like :Papellido and UPPER(e.Sapellido) like :Sapellido", hints = @QueryHint(name = "eclipselink.refresh", value = "true")),
+    /*@NamedQuery(name = "Empleado.findByEmpNombre", query = "SELECT e FROM Empleado e WHERE e.Nombre = :Nombre"),
+    @NamedQuery(name = "Empleado.findByEmpPapellido", query = "SELECT e FROM Empleado e WHERE e.Papellido = :Papellido"),
+    @NamedQuery(name = "Empleado.findByEmpSapellido", query = "SELECT e FROM Empleado e WHERE e.Sapellido = :Sapellido"),
+    @NamedQuery(name = "Empleado.findByEmpCedula", query = "SELECT e FROM Empleado e WHERE e.Cedula = :Cedula"),
+    @NamedQuery(name = "Empleado.findByEmpGenero", query = "SELECT e FROM Empleado e WHERE e.Genero = :Genero"),
+    @NamedQuery(name = "Empleado.findByEmpCorreo", query = "SELECT e FROM Empleado e WHERE e.Correo = :Correo"),
+    @NamedQuery(name = "Empleado.findByEmpAdministrador", query = "SELECT e FROM Empleado e WHERE e.Administrador = :Administrador"),
+    @NamedQuery(name = "Empleado.findByEmpUsuario", query = "SELECT e FROM Empleado e WHERE e.Usuario = :Usuario"),
+    @NamedQuery(name = "Empleado.findByEmpClave", query = "SELECT e FROM Empleado e WHERE e.Clave = :Clave"),
+    @NamedQuery(name = "Empleado.findByEmpFingreso", query = "SELECT e FROM Empleado e WHERE e.Fingreso = :Fingreso"),
+    @NamedQuery(name = "Empleado.findByEmpFsalida", query = "SELECT e FROM Empleado e WHERE e.Fsalida = :Fsalida"),
+    @NamedQuery(name = "Empleado.findByEmpEstado", query = "SELECT e FROM Empleado e WHERE e.Estado = :Estado"),
+  @NamedQuery(name = "Empleado.findByEmpVersion", query = "SELECT e FROM Empleado e WHERE e.empVersion = :empVersion")*/})
+public class Empleado implements Serializable { 
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -100,16 +100,16 @@ public class Empleados implements Serializable {
     @Column(name = "EMP_VERSION")
     private Long Version;
     @ManyToMany(mappedBy = "empleadosList", fetch = FetchType.LAZY)
-    private List<Tipoplanillas> tipoplanillasList;
+    private List<TipoPlanillas> tipoplanillasList;
 
-    public Empleados() {
+    public Empleado() {
     }
 
-    public Empleados(Long empId) {
+    public Empleado(Long empId) {
         this.Id = empId;
     }
 
-    public Empleados(Long empId, String empNombre, String empPapellido, String empSapellido, String empCedula, String empGenero, String empAdministrador, Date empFingreso, String empEstado, Long empVersion) {
+    public Empleado(Long empId, String empNombre, String empPapellido, String empSapellido, String empCedula, String empGenero, String empAdministrador, Date empFingreso, String empEstado, Long empVersion) {
         this.Id = empId;
         this.Nombre = empNombre;
         this.Papellido = empPapellido;
@@ -122,7 +122,7 @@ public class Empleados implements Serializable {
         this.Version = empVersion;
     }
 
-    public Empleados(EmpleadoDto empleadoDto){
+    public Empleado(EmpleadoDto empleadoDto){
         this.Id = empleadoDto.getId();
         actualizarEmpleado(empleadoDto);
     }
@@ -256,11 +256,11 @@ public class Empleados implements Serializable {
         this.Version = empVersion;
     }
 
-    public List<Tipoplanillas> getTipoplanillasList() {
+    public List<TipoPlanillas> getTipoplanillasList() {
         return tipoplanillasList;
     }
 
-    public void setTipoplanillasList(List<Tipoplanillas> tipoplanillasList) {
+    public void setTipoplanillasList(List<TipoPlanillas> tipoplanillasList) {
         this.tipoplanillasList = tipoplanillasList;
     }
 
@@ -274,10 +274,10 @@ public class Empleados implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Empleados)) {
+        if (!(object instanceof Empleado)) {
             return false;
         }
-        Empleados other = (Empleados) object;
+        Empleado other = (Empleado) object;
         if ((this.Id == null && other.Id != null) || (this.Id != null && !this.Id.equals(other.Id))) {
             return false;
         }

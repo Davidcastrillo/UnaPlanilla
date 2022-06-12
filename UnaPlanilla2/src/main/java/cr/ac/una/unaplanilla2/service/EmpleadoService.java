@@ -5,7 +5,7 @@
 package cr.ac.una.unaplanilla2.service;
 
 import cr.ac.una.unaplanilla2.model.EmpleadoDto;
-import cr.ac.una.unaplanilla2.model.Empleados;
+import cr.ac.una.unaplanilla2.model.Empleado;
 import cr.ac.una.unaplanilla2.util.EntityManagerHelper;
 import cr.ac.una.unaplanilla2.util.Respuesta;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -29,10 +29,10 @@ public class EmpleadoService {
     
     public Respuesta getUsuario(String usuario, String clave) {
         try {      
-            Query query = em.createNamedQuery("Empleados.findByUsuarioClave",Empleados.class);
+            Query query = em.createNamedQuery("Empleado.findByUsuarioClave",Empleado.class);
             query.setParameter("Usuario", usuario);
             query.setParameter("Clave", clave);
-            EmpleadoDto empleado = new EmpleadoDto((Empleados)query.getSingleResult());
+            EmpleadoDto empleado = new EmpleadoDto((Empleado)query.getSingleResult());
             return new Respuesta(true, "", "", "Empleados", empleado);
         } catch (NoResultException ex) {
             return new Respuesta(false, "No existe un usuario con las credenciales ingresadas.", "getUsuario NoResultException");
@@ -50,9 +50,9 @@ public class EmpleadoService {
         try {
             et = em.getTransaction();
             et.begin();
-            Empleados empleado;
+            Empleado empleado;
             if (empleadoDto.getId() != null && empleadoDto.getId() > 0){
-                empleado = em.find(Empleados.class, empleadoDto.getId());
+                empleado = em.find(Empleado.class, empleadoDto.getId());
                 if (empleado == null){
                     et.rollback();
                     return new Respuesta(false, "No se encrontró el empleado a modificar.", "guardarEmpleado NoResultException");
@@ -60,7 +60,7 @@ public class EmpleadoService {
                 empleado.actualizarEmpleado(empleadoDto);
                 empleado = em.merge(empleado);
             } else{
-                empleado = new Empleados(empleadoDto);
+                empleado = new Empleado(empleadoDto);
                 em.persist(empleado);
             }            
             et.commit();
@@ -77,9 +77,9 @@ public class EmpleadoService {
     }
     public Respuesta getEmpleado(Long id){
         try {
-            Query query =em.createNamedQuery("Empleados.findByEmpId",Empleados.class);
+            Query query =em.createNamedQuery("Empleado.findByEmpId",Empleado.class);
             query.setParameter("Id", id);
-            EmpleadoDto empleado = new EmpleadoDto((Empleados)query.getSingleResult());
+            EmpleadoDto empleado = new EmpleadoDto((Empleado)query.getSingleResult());
             return new Respuesta(true, " ", "", "Empleados", empleado);    
         }  catch (NoResultException ex) {
             return new Respuesta(false, "No existe un empleado con el código ingresado.", "getEmpleado NoResultException");
@@ -97,9 +97,9 @@ public class EmpleadoService {
         try {
             et = em.getTransaction();
             et.begin();
-            Empleados empleado;
+            Empleado empleado;
             if (Id != null && Id > 0){
-                empleado = em.find(Empleados.class, Id);
+                empleado = em.find(Empleado.class, Id);
                 if (empleado == null){
                     et.rollback();
                     return new Respuesta(false, "No se encrontró el empleado a eliminar.", "eliminarEmpleado NoResultException");
@@ -123,14 +123,14 @@ public class EmpleadoService {
     
         public Respuesta getEmpleados(String cedula, String nombre, String pApellido, String sApellido) {
         try {
-            Query query = em.createNamedQuery("Empleados.findByCedulaNombreApellidos",Empleados.class);
+            Query query = em.createNamedQuery("Empleado.findByCedulaNombreApellidos",Empleado.class);
             query.setParameter("Nombre", nombre);
             query.setParameter("Cedula", cedula);
             query.setParameter("Papellido", pApellido);
             query.setParameter("Sapellido", sApellido);
-            List<Empleados> empleados = (List<Empleados>) query.getResultList();
+            List<Empleado> empleados = (List<Empleado>) query.getResultList();
             List<EmpleadoDto> empleadosDto = new ArrayList<>();
-            for (Empleados emp : empleados) {
+            for (Empleado emp : empleados) {
                 empleadosDto.add(new EmpleadoDto(emp));
             }
             return new Respuesta(true, "", "", "Empleados", empleadosDto);

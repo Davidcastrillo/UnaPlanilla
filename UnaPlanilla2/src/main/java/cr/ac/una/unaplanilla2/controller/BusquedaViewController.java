@@ -253,31 +253,31 @@ public class BusquedaViewController extends Controller implements Initializable 
             tbvResultados.getColumns().add(tbcDescrp);
             tbvResultados.getColumns().add(tbcPlaXmes);
             tbvResultados.refresh();
-//            btnfFiltrar.setOnMouseClicked((event) -> {
-//                tbvResultados.getItems().clear();
-//                TipoPlanillaService service = new TipoPlanillaService();
-//                String idP = "%" + tbcIdP.getText() + "%";
-//
-//                String cod = "%" + txtCod.getText() + "%";
-//
-//                String Descri = "%" + txtDescripcion.getText() + "%";
-//
-//                String PlxM = "%" + txtPlanillaxMes.getText() + "%";
-//
-//                String cedula = "%" + txtCedula.getText() + "%";
-//
-//                String idEmp = "%" + txtId.getText() + "%";
-//
-//                Respuesta respuesta = service.getTipoplanillas(cod.toUpperCase(), Descri.toUpperCase(), PlxM.toUpperCase(),idEmp.toUpperCase(),cedula.toUpperCase());
-//
-//                if (respuesta.getEstado()) {
-//                    ObservableList<TipoplanillaDto> tipoplani = FXCollections.observableList((List<TipoplanillaDto>) respuesta.getResultado("TipoPlanillas"));
-//                    tbvResultados.setItems(tipoplani);
-//                    tbvResultados.refresh();
-//                } else {
-//                    new Mensaje().showModal(Alert.AlertType.ERROR, "Consultar empleados", getStage(), respuesta.getMensaje());
-//                }
-//            });
+            btnfFiltrar.setOnMouseClicked((event) -> {
+                tbvResultados.getItems().clear();
+                TipoPlanillaService service = new TipoPlanillaService();
+                String idP = "%" + tbcIdP.getText() + "%";
+
+                String cod = "%" + txtCod.getText() + "%";
+
+                String Descri = "%" + txtDescripcion.getText() + "%";
+
+                String PlxM = "%" + txtPlanillaxMes.getText() + "%";
+
+                String cedula = "%" + txtCedula.getText() + "%";
+
+                String idEmp = "%" + txtId.getText() + "%";
+
+                Respuesta respuesta = service.getTipoplanillas(cod.toUpperCase(), Descri.toUpperCase(), PlxM.toUpperCase(),idEmp.toUpperCase(),cedula.toUpperCase());
+
+                if (respuesta.getEstado()) {
+                    ObservableList<TipoplanillaDto> tipoplani = FXCollections.observableList((List<TipoplanillaDto>) respuesta.getResultado("TipoPlanillas"));
+                    tbvResultados.setItems(tipoplani);
+                    tbvResultados.refresh();
+                } else {
+                    new Mensaje().showModal(Alert.AlertType.ERROR, "Consultar empleados", getStage(), respuesta.getMensaje());
+                }
+            });
 
         } catch (Exception ex) {
             Logger.getLogger(BusquedaViewController.class.getName()).log(Level.SEVERE, "Error consultando los empleados.", ex);

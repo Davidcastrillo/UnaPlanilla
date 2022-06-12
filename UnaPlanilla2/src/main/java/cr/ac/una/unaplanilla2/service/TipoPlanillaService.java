@@ -5,9 +5,9 @@
 package cr.ac.una.unaplanilla2.service;
 
 import cr.ac.una.unaplanilla2.model.EmpleadoDto;
-import cr.ac.una.unaplanilla2.model.Empleados;
+import cr.ac.una.unaplanilla2.model.Empleado;
 import cr.ac.una.unaplanilla2.model.TipoplanillaDto;
-import cr.ac.una.unaplanilla2.model.Tipoplanillas;
+import cr.ac.una.unaplanilla2.model.TipoPlanillas;
 import cr.ac.una.unaplanilla2.util.EntityManagerHelper;
 import cr.ac.una.unaplanilla2.util.Respuesta;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -32,12 +32,12 @@ public class TipoPlanillaService {
 
     public Respuesta getTipoPlanilla(Long id) {
         try {
-            Query qryTipoPlanilla = em.createNamedQuery("Tipoplanillas.findByTplaId", Tipoplanillas.class);
+            Query qryTipoPlanilla = em.createNamedQuery("TipoPlanillas.findByTplaId", TipoPlanillas.class);
             qryTipoPlanilla.setParameter("Id", id);
 
-            Tipoplanillas tipoPlanilla = (Tipoplanillas) qryTipoPlanilla.getSingleResult();
+            TipoPlanillas tipoPlanilla = (TipoPlanillas) qryTipoPlanilla.getSingleResult();
             TipoplanillaDto tipoPlanillaDto = new TipoplanillaDto(tipoPlanilla);
-            for (Empleados emp : tipoPlanilla.getEmpleadosList()) {
+            for (Empleado emp : tipoPlanilla.getEmpleadosList()) {
                 tipoPlanillaDto.getEmpleados().add(new EmpleadoDto(emp));
             }
             return new Respuesta(true, "", "", "TipoPlanilla", tipoPlanillaDto);
@@ -57,21 +57,21 @@ public class TipoPlanillaService {
         try {
             et = em.getTransaction();
             et.begin();
-            Tipoplanillas tipoPlanilla;
+            TipoPlanillas tipoPlanilla;
             if (tipoPlanillaDto.getId() != null && tipoPlanillaDto.getId() > 0) {
-                tipoPlanilla = em.find(Tipoplanillas.class, tipoPlanillaDto.getId());
+                tipoPlanilla = em.find(TipoPlanillas.class, tipoPlanillaDto.getId());
                 if (tipoPlanilla == null) {
                     et.rollback();
                     return new Respuesta(false, "No se encontró el tipo de planilla a modificar.", "guardarTipoPlanilla NoResultException");
                 }
                 tipoPlanilla.actualizarTipoPlanilla(tipoPlanillaDto);
                 for (EmpleadoDto emp : tipoPlanillaDto.getEmpleadosEliminados()) {
-                    tipoPlanilla.getEmpleadosList().remove(new Empleados(emp.getId()));
+                    tipoPlanilla.getEmpleadosList().remove(new Empleado(emp.getId()));
                 }
                 if (!tipoPlanillaDto.getEmpleados().isEmpty()) {
                     for (EmpleadoDto emp : tipoPlanillaDto.getEmpleados()) {
                         if (emp.getModificado()) {
-                            Empleados empleado = em.find(Empleados.class, emp.getId());
+                            Empleado empleado = em.find(Empleado.class, emp.getId());
                             empleado.getTipoplanillasList().add(tipoPlanilla);
                             tipoPlanilla.getEmpleadosList().add(empleado);
                         }
@@ -79,12 +79,12 @@ public class TipoPlanillaService {
                 }
                 tipoPlanilla = em.merge(tipoPlanilla);
             } else {
-                tipoPlanilla = new Tipoplanillas(tipoPlanillaDto);
+                tipoPlanilla = new TipoPlanillas(tipoPlanillaDto);
                 em.persist(tipoPlanilla);
             }
             et.commit();
             tipoPlanillaDto = new TipoplanillaDto(tipoPlanilla);
-            for (Empleados emp : tipoPlanilla.getEmpleadosList()) {
+            for (Empleado emp : tipoPlanilla.getEmpleadosList()) {
                 tipoPlanillaDto.getEmpleados().add(new EmpleadoDto(emp));
             }
             return new Respuesta(true, "", "", "TipoPlanilla", tipoPlanillaDto);
@@ -100,26 +100,26 @@ public class TipoPlanillaService {
             System.out.println("El valor de la cedula es " + cedula);
             System.out.println("El valor del id es " + id);
             if (id == "%%" && cedula == "%%") {
-                Query qryTipoPlanilla = em.createNamedQuery("TipoPlanilla.findbythings", Tipoplanillas.class);
+                Query qryTipoPlanilla = em.createNamedQuery("TipoPlanillas.findbythings", TipoPlanillas.class);
                 qryTipoPlanilla.setParameter("Codigo", codigo);
                 qryTipoPlanilla.setParameter("Descripcion", descripcion);
                 qryTipoPlanilla.setParameter("Plaxmes", planillasMes);
-                List<Tipoplanillas> planillas = (List<Tipoplanillas>) qryTipoPlanilla.getResultList();
+                List<TipoPlanillas> planillas = (List<TipoPlanillas>) qryTipoPlanilla.getResultList();
                 List<TipoplanillaDto> planillasDto = new ArrayList<>();
-                for (Tipoplanillas pla : planillas) {
+                for (TipoPlanillas pla : planillas) {
                     planillasDto.add(new TipoplanillaDto(pla));
                 }
                 return new Respuesta(true, "", "", "TipoPlanillas", planillasDto);
 
-            } else {
+            } else {// busqueda por los empleados vinculados o insertados en las tablas 
 
-                Query qryTipoPlanilla = em.createNamedQuery("TipoPlanilla.findBylosempleados", Tipoplanillas.class);
+                Query qryTipoPlanilla = em.createNamedQuery("TipoPlanillas.findbyEmp", TipoPlanillas.class);
                 qryTipoPlanilla.setParameter("Codigo", codigo);
                 qryTipoPlanilla.setParameter("Id", id);
                 qryTipoPlanilla.setParameter("Cedula", cedula);
-                List<Tipoplanillas> planillas = (List<Tipoplanillas>) qryTipoPlanilla.getResultList();
+                List<TipoPlanillas> planillas = (List<TipoPlanillas>) qryTipoPlanilla.getResultList();
                 List<TipoplanillaDto> planillasDto = new ArrayList<>();
-                for (Tipoplanillas pla : planillas) {
+                for (TipoPlanillas pla : planillas) {
                     planillasDto.add(new TipoplanillaDto(pla));
                 }
                 return new Respuesta(true, "", "", "TipoPlanillas", planillasDto);
@@ -141,9 +141,9 @@ public class TipoPlanillaService {
         try {
             et = em.getTransaction();
             et.begin();
-            Tipoplanillas tipoPlanilla;
+            TipoPlanillas tipoPlanilla;
             if (id != null && id > 0) {
-                tipoPlanilla = em.find(Tipoplanillas.class, id);
+                tipoPlanilla = em.find(TipoPlanillas.class, id);
                 if (tipoPlanilla == null) {
                     et.rollback();
                     return new Respuesta(false, "No se encrontró el tipo de planilla a eliminar.", "eliminarTipoPlanilla NoResultException");

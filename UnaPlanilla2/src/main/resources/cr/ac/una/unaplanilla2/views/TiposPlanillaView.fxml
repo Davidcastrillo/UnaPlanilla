@@ -108,9 +108,9 @@
                                                 </JFXTextField>
                                                 <JFXButton fx:id="btnAgregar" contentDisplay="GRAPHIC_ONLY" ellipsisString="" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#onActionBtnAgregar" prefHeight="26.0" prefWidth="26.0">
                                                    <graphic>
-                                                      <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" smooth="false">
+                                                      <ImageView fitHeight="22.0" fitWidth="22.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" smooth="false">
                                                          <image>
-                                                            <Image url="@../../../../../../../../../../../Progra%202/Planillas/UnaPlanilla3/src/main/resources/cr/ac/una/unaplanilla3/resources/Agregar-48.png" />
+                                                            <Image url="@../resources/Agregar-48.png" />
                                                          </image>
                                                       </ImageView>
                                                    </graphic>
