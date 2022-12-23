@@ -72,8 +72,8 @@ public class TipoPlanillaService {
                     for (EmpleadoDto emp : tipoPlanillaDto.getEmpleados()) {
                         if (emp.getModificado()) {
                             Empleado empleado = em.find(Empleado.class, emp.getId());
-                            empleado.getTipoplanillasList().add(tipoPlanilla);
-                            tipoPlanilla.getEmpleadosList().add(empleado);
+                            empleado.getTipoplanillasList().add(tipoPlanilla); // al empleado se le asigna una planilla
+                            tipoPlanilla.getEmpleadosList().add(empleado); // y a la planilla se le agrega un empleado 
                         }
                     }
                 }
@@ -97,9 +97,7 @@ public class TipoPlanillaService {
 
     public Respuesta getTipoplanillas(String codigo, String descripcion, String planillasMes, String id, String cedula) {
         try {
-            System.out.println("El valor de la cedula es " + cedula);
-            System.out.println("El valor del id es " + id);
-            if (id == "%%" && cedula == "%%") {
+            if ("%%".equals(id) && "%%".equals(cedula)) {
                 Query qryTipoPlanilla = em.createNamedQuery("TipoPlanillas.findbythings", TipoPlanillas.class);
                 qryTipoPlanilla.setParameter("Codigo", codigo);
                 qryTipoPlanilla.setParameter("Descripcion", descripcion);

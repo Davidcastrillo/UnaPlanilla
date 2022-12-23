@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TipoPlanillas.findAll", query = "SELECT t FROM TipoPlanillas t"),
     @NamedQuery(name = "TipoPlanillas.findByTplaId", query = "SELECT t FROM TipoPlanillas t WHERE t.Id = :Id"),
     @NamedQuery(name = "TipoPlanillas.findbythings", query = "SELECT t FROM TipoPlanillas t WHERE UPPER(t.Codigo) like :Codigo and UPPER(t.Descripcion) like :Descripcion and UPPER(t.Plaxmes) like :Plaxmes ", hints = @QueryHint(name = "eclipselink.refresh", value = "true")),
-   /* @NamedQuery(name = "TipoPlanillas.findbyEmp", query = "SELECT t FROM TipoPlanillas t Join t.Empleado e WHERE UPPER(t.Codigo) like :Codigo and  UPPER(e.Cedula) like :Cedula and UPPER(e.Id) like :Id",hints = @QueryHint(name = "eclipselink.refresh", value = "true")),
+   @NamedQuery(name = "TipoPlanillas.findbyEmp", query = "SELECT t FROM TipoPlanillas t Join t.Id e WHERE UPPER(t.Codigo) like :Codigo and  UPPER(e.Cedula) like :Cedula and UPPER(e.Id) like :Id",hints = @QueryHint(name = "eclipselink.refresh", value = "true")),
    /* @NamedQuery(name = "TipoPlanillas.findByTplaCodigo", query = "SELECT t FROM TipoPlanillas t WHERE t.Codigo = :Codigo"),
     @NamedQuery(name = "TipoPlanillas.findByTplaDescripcion", query = "SELECT t FROM TipoPlanillas t WHERE t.Descripcion = :Descripcion"),
     @NamedQuery(name = "TipoPlanillas.findByTplaPlaxmes", query = "SELECT t FROM TipoPlanillas t WHERE t.Plaxmes = :Plaxmes"),
